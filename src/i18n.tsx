@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { getPathLang } from './lib/seo'
 
 export type Lang = 'pt' | 'en'
 
@@ -16,6 +17,37 @@ const I18nContext = createContext<I18nContextType>({
 
 export function useI18n() {
   return useContext(I18nContext)
+}
+
+const resolveInitialLang = (): Lang => {
+  if (typeof window === 'undefined') {
+    return 'pt'
+  }
+
+  const bootLang = (window as typeof window & { __INITIAL_LANG__?: Lang }).__INITIAL_LANG__
+  if (bootLang === 'pt' || bootLang === 'en') {
+    return bootLang
+  }
+
+  const pathLang = getPathLang(window.location.pathname)
+  if (pathLang === 'pt' || pathLang === 'en') {
+    return pathLang
+  }
+
+  const saved = localStorage.getItem('lang') as Lang | null
+  if (saved === 'pt' || saved === 'en') {
+    return saved
+  }
+
+  const browserLocales = navigator.languages?.length
+    ? navigator.languages
+    : [navigator.language]
+
+  const prefersPortuguese = browserLocales.some((locale) =>
+    locale.toLowerCase().startsWith('pt')
+  )
+
+  return prefersPortuguese ? 'pt' : 'en'
 }
 
 const translations: Record<Lang, Record<string, string>> = {
@@ -36,6 +68,10 @@ const translations: Record<Lang, Record<string, string>> = {
     'hero.tagline': 'Cinema • Drones • IA • Desenvolvimento Web',
     'hero.cta.projects': 'Ver Portfólio',
     'hero.cta.contact': 'Solicitar Orçamento',
+    'hero.cta.showreel': 'Assistir Showreel',
+
+    // Brands
+    'brands.title': 'Empresas que confiam em nosso ecossistema',
 
     // About
     'about.title': 'O Estrategista Digital',
@@ -175,44 +211,46 @@ const translations: Record<Lang, Record<string, string>> = {
     'webdev.cta.desc': 'Combinamos expertise audiovisual com desenvolvimento moderno para criar experiências digitais que impressionam e convertem.',
     'webdev.cta.button': 'Solicitar Orçamento Web',
 
-    // Pricing
-    'pricing.title': 'Pacotes & Preços',
-    'pricing.subtitle': 'Soluções transparentes para cada necessidade. Do digital ao audiovisual, entregamos excelência.',
-    'pricing.popular': 'MAIS POPULAR',
-    'pricing.cta': 'Solicitar Orçamento',
-    'pricing.viral.title': 'Conteúdo Viral & Shorts',
-    'pricing.viral.price': 'R$ 1.800/mês',
-    'pricing.viral.from': 'A partir de',
-    'pricing.viral.f1': 'Captação mensal de conteúdo',
-    'pricing.viral.f2': 'Edição dinâmica para TikTok/Reels/Shorts',
-    'pricing.viral.f3': 'Cortes virais de podcasts ou institucionais',
-    'pricing.viral.f4': 'Motion graphics para retenção de atenção',
-    'pricing.viral.f5': 'Legendas animadas de alta conversão',
-    'pricing.web.title': 'Presença Web',
-    'pricing.web.price': 'R$ 2.500',
-    'pricing.web.from': 'A partir de',
-    'pricing.web.f1': 'Landing page moderna e responsiva',
-    'pricing.web.f2': 'Otimização SEO on-page',
-    'pricing.web.f3': 'Integração WhatsApp e formulários',
-    'pricing.web.f4': 'Design personalizado cyberpunk ou clean',
-    'pricing.web.f5': 'Entrega em até 15 dias',
-    'pricing.av.title': 'Audiovisual',
-    'pricing.av.price': 'R$ 3.500',
-    'pricing.av.from': 'A partir de',
-    'pricing.av.f1': 'Vídeo institucional até 3 min',
-    'pricing.av.f2': 'Captação profissional com câmera cinema',
-    'pricing.av.f3': 'Edição completa e color grading',
-    'pricing.av.f4': 'Motion graphics e legendas',
-    'pricing.av.f5': 'Filmagem aérea com drone inclusa',
-    'pricing.full.title': 'Ecossistema Completo',
-    'pricing.full.price': 'R$ 7.500',
-    'pricing.full.from': 'A partir de',
-    'pricing.full.f1': 'Site/Sistema web completo',
-    'pricing.full.f2': 'Vídeo institucional profissional',
-    'pricing.full.f3': 'Integração com automações e IA',
-    'pricing.full.f4': 'Filmagem aérea com drone',
-    'pricing.full.f5': 'Motion graphics e identidade visual',
-    'pricing.full.f6': 'Suporte e otimização por 30 dias',
+    // Services / Pricing
+    'pricing.title': 'Nossos Serviços',
+    'pricing.subtitle': 'Soluções criativas de alto impacto. Do design à animação, transformamos sua visão em realidade.',
+    'pricing.cta': 'Solicite um Orçamento',
+
+    // Service 1 - Animation
+    'svc.anim.title': 'Dê Vida aos Seus Desenhos',
+    'svc.anim.desc': 'Transformamos esboços estáticos, ilustrações ou mascotes em animações fluidas de qualidade cinematográfica.',
+    'svc.anim.f1': 'Animação 2D e 3D a partir de artes estáticas',
+    'svc.anim.f2': 'Sincronia labial (Lipsync) e dublagem com IA',
+    'svc.anim.f3': 'Movimentos de câmera profissionais',
+    'svc.anim.f4': 'Ideal para autores, ilustradores e criadores',
+    'svc.anim.price': 'A partir de R$ 397',
+
+    // Service 2 - Thumbnails
+    'svc.thumb.title': 'Thumbs e Artes para YouTube',
+    'svc.thumb.desc': 'Aumente seus cliques (CTR) com miniaturas hipnotizantes e identidade visual de alta retenção para o seu canal.',
+    'svc.thumb.f1': 'Thumbnails fotorrealistas de alta conversão',
+    'svc.thumb.f2': 'Banners e artes para aba Comunidade',
+    'svc.thumb.f3': 'Personagens consistentes para Canais Dark',
+    'svc.thumb.f4': 'Design focado na psicologia da atenção',
+    'svc.thumb.price': 'Pacotes a partir de R$ 97',
+
+    // Service 3 - Branding
+    'svc.brand.title': 'Identidade Visual Completa',
+    'svc.brand.desc': 'Construímos marcas memoráveis. Muito além de uma logo, entregamos o ecossistema visual perfeito para o seu negócio.',
+    'svc.brand.f1': 'Criação de Logotipo Profissional',
+    'svc.brand.f2': 'Definição de paleta de cores e tipografia',
+    'svc.brand.f3': 'Brand Book (Manual de uso da Marca)',
+    'svc.brand.f4': 'Aplicações em redes sociais e impressos',
+    'svc.brand.price': 'A partir de R$ 997',
+
+    // Service 4 - Restoration
+    'svc.restore.title': 'Recuperação de Acervo Histórico',
+    'svc.restore.desc': 'O passado ganha vida. Restauramos, colorizamos e animamos fotografias e vídeos antigos com inteligência artificial.',
+    'svc.restore.f1': 'Restauração de fotos danificadas ou arranhadas',
+    'svc.restore.f2': 'Colorização realista de imagens Preto e Branco',
+    'svc.restore.f3': 'Animação sutil de fotos (efeito de movimento)',
+    'svc.restore.f4': 'Upscale e melhoria de resolução para 4K',
+    'svc.restore.price': 'A partir de R$ 147 / material',
 
     // Cases
     'cases.title': 'Projetos em Destaque',
@@ -268,6 +306,8 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // Contact
     'contact.title': 'Conexão Direta',
+    'contact.cta.heading': 'Vamos transformar sua visão em realidade?',
+    'contact.cta.desc': 'Preencha o formulário ao lado e receba um orçamento personalizado em até 24 horas. Atendemos todo o Brasil — do audiovisual cinematográfico ao desenvolvimento de sistemas com IA.',
     'contact.form.title': 'Envie sua mensagem',
     'contact.form.desc': 'Preencha o formulário abaixo e entrarei em contato em até 24 horas',
     'contact.social.title': 'Redes Sociais',
@@ -280,7 +320,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'footer.slogan': 'Transformando ideias em narrativas visuais e digitais de alto impacto.',
     'footer.links': 'Links Rápidos',
     'footer.services': 'Serviços',
-    'footer.pricing': 'Pacotes & Preços',
+    'footer.pricing': 'Nossos Serviços',
     'footer.svc.sites': 'Desenvolvimento de Sites',
     'footer.svc.ai': 'Sistemas com IA',
     'footer.svc.video': 'Vídeo Institucional',
@@ -294,10 +334,8 @@ const translations: Record<Lang, Record<string, string>> = {
     // Contact Form
     'form.name': 'Nome',
     'form.name.placeholder': 'Seu nome',
-    'form.email': 'E-mail',
-    'form.email.placeholder': 'seu@email.com',
-    'form.subject': 'Assunto',
-    'form.subject.placeholder': 'Assunto da mensagem',
+    'form.company': 'Empresa',
+    'form.company.placeholder': 'Nome da sua empresa',
     'form.message': 'Mensagem',
     'form.message.placeholder': 'Descreva seu projeto...',
     'form.send': 'Enviar Mensagem',
@@ -407,6 +445,43 @@ const translations: Record<Lang, Record<string, string>> = {
     'svc.ai.p2d': 'Storyboard IA + roteiro + conceitos',
     'svc.ai.p3': 'Produção Híbrida',
     'svc.ai.p3d': 'Vídeo com elementos gerados por IA',
+    'aa.s1.tag': 'Atendimento',
+    'aa.s1.title': 'Fluxos de lead e primeira resposta',
+    'aa.s1.desc': 'Automação para primeiro contato, qualificação e perguntas recorrentes em diferentes canais.',
+    'aa.s1.f1': 'Respostas mais rápidas com informação consistente',
+    'aa.s1.f2': 'Captação e direcionamento de leads para a pessoa certa',
+    'aa.s1.f3': 'Menos follow-up manual no topo do funil',
+    'aa.s2.tag': 'Operação',
+    'aa.s2.title': 'Automação de fluxo interno',
+    'aa.s2.desc': 'Etapas conectadas para aprovações, repasses, lembretes e tarefas internas repetitivas.',
+    'aa.s2.f1': 'Menos atrito operacional',
+    'aa.s2.f2': 'Menos repasses manuais entre ferramentas',
+    'aa.s2.f3': 'Mais consistência na rotina',
+    'aa.s3.tag': 'Conteúdo',
+    'aa.s3.title': 'Apoio a briefing e conteúdo',
+    'aa.s3.desc': 'Fluxos assistidos para coletar informações, organizar briefing e gerar primeiras versões.',
+    'aa.s3.f1': 'Coleta estruturada de briefing e informações',
+    'aa.s3.f2': 'Primeiras versões e documentação com mais rapidez',
+    'aa.s3.f3': 'Mais tempo para estratégia e revisão',
+    'aa.s4.tag': 'Visibilidade',
+    'aa.s4.title': 'Relatórios e acompanhamento',
+    'aa.s4.desc': 'Organização automática de dados e atualizações recorrentes para equipes que precisam decidir melhor.',
+    'aa.s4.f1': 'Dashboards e resumos recorrentes',
+    'aa.s4.f2': 'Menos tempo montando atualização manualmente',
+    'aa.s4.f3': 'Mais rapidez para enxergar o que precisa de ação',
+    'aa.p1': 'A equipe responde manualmente as mesmas perguntas todos os dias.',
+    'aa.p2': 'Os leads chegam, mas ninguém qualifica ou direciona de forma consistente.',
+    'aa.p3': 'Os repasses internos dependem demais de memória e mensagens soltas.',
+    'aa.p4': 'Os relatórios demoram para ser montados e já nascem desatualizados.',
+    'aa.p5': 'Existem gargalos claros, mas ninguém tem tempo para mapear tudo direito.',
+    'aa.h1.title': 'Mapear o fluxo atual',
+    'aa.h1.desc': 'Identificamos onde o tempo está sendo perdido, quais etapas mais se repetem e onde está o maior atrito.',
+    'aa.h2.title': 'Priorizar a automação certa',
+    'aa.h2.desc': 'Nem tudo deve ser automatizado. Escolhemos as partes que geram ganho operacional mais claro.',
+    'aa.h3.title': 'Construir, testar e validar',
+    'aa.h3.desc': 'A automação é estruturada, testada e ajustada em cima da rotina real antes de escalar.',
+    'aa.h4.title': 'Monitorar e refinar',
+    'aa.h4.desc': 'Depois de entrar no ar, o fluxo é revisto e melhorado para continuar confiável conforme a operação evolui.',
   },
 
   en: {
@@ -426,6 +501,10 @@ const translations: Record<Lang, Record<string, string>> = {
     'hero.tagline': 'Cinema • Drones • AI • Web Development',
     'hero.cta.projects': 'View Portfolio',
     'hero.cta.contact': 'Request Quote',
+    'hero.cta.showreel': 'Watch Showreel',
+
+    // Brands
+    'brands.title': 'Companies that trust our ecosystem',
 
     // About
     'about.title': 'The Digital Strategist',
@@ -565,44 +644,46 @@ const translations: Record<Lang, Record<string, string>> = {
     'webdev.cta.desc': 'We combine audiovisual expertise with modern development to create digital experiences that impress and convert.',
     'webdev.cta.button': 'Request Web Quote',
 
-    // Pricing
-    'pricing.title': 'Packages & Pricing',
-    'pricing.subtitle': 'Transparent solutions for every need. From digital to audiovisual, we deliver excellence.',
-    'pricing.popular': 'MOST POPULAR',
-    'pricing.cta': 'Request Quote',
-    'pricing.viral.title': 'Viral Content & Shorts',
-    'pricing.viral.price': 'R$ 1,800/mo',
-    'pricing.viral.from': 'Starting at',
-    'pricing.viral.f1': 'Monthly content capture',
-    'pricing.viral.f2': 'Dynamic editing for TikTok/Reels/Shorts',
-    'pricing.viral.f3': 'Viral cuts from podcasts or institutional',
-    'pricing.viral.f4': 'Motion graphics for attention retention',
-    'pricing.viral.f5': 'High-conversion animated subtitles',
-    'pricing.web.title': 'Web Presence',
-    'pricing.web.price': 'R$ 2,500',
-    'pricing.web.from': 'Starting at',
-    'pricing.web.f1': 'Modern and responsive landing page',
-    'pricing.web.f2': 'On-page SEO optimization',
-    'pricing.web.f3': 'WhatsApp and forms integration',
-    'pricing.web.f4': 'Custom cyberpunk or clean design',
-    'pricing.web.f5': 'Delivery within 15 days',
-    'pricing.av.title': 'Audiovisual',
-    'pricing.av.price': 'R$ 3,500',
-    'pricing.av.from': 'Starting at',
-    'pricing.av.f1': 'Institutional video up to 3 min',
-    'pricing.av.f2': 'Professional cinema camera capture',
-    'pricing.av.f3': 'Full editing and color grading',
-    'pricing.av.f4': 'Motion graphics and subtitles',
-    'pricing.av.f5': 'Aerial drone footage included',
-    'pricing.full.title': 'Complete Ecosystem',
-    'pricing.full.price': 'R$ 7,500',
-    'pricing.full.from': 'Starting at',
-    'pricing.full.f1': 'Complete website/web system',
-    'pricing.full.f2': 'Professional institutional video',
-    'pricing.full.f3': 'AI automation integration',
-    'pricing.full.f4': 'Aerial drone footage',
-    'pricing.full.f5': 'Motion graphics and visual identity',
-    'pricing.full.f6': '30-day support and optimization',
+    // Services / Pricing
+    'pricing.title': 'Our Services',
+    'pricing.subtitle': 'High-impact creative solutions. From design to animation, we transform your vision into reality.',
+    'pricing.cta': 'Request a Quote',
+
+    // Service 1 - Animation
+    'svc.anim.title': 'Bring Your Drawings to Life',
+    'svc.anim.desc': 'We transform static sketches, illustrations or mascots into fluid animations with cinematic quality.',
+    'svc.anim.f1': '2D and 3D animation from static artwork',
+    'svc.anim.f2': 'Lip sync and AI-powered dubbing',
+    'svc.anim.f3': 'Professional camera movements',
+    'svc.anim.f4': 'Ideal for authors, illustrators and creators',
+    'svc.anim.price': 'Starting at R$ 397',
+
+    // Service 2 - Thumbnails
+    'svc.thumb.title': 'YouTube Thumbnails & Art',
+    'svc.thumb.desc': 'Boost your clicks (CTR) with mesmerizing thumbnails and high-retention visual identity for your channel.',
+    'svc.thumb.f1': 'Photorealistic high-conversion thumbnails',
+    'svc.thumb.f2': 'Banners and Community tab artwork',
+    'svc.thumb.f3': 'Consistent characters for Dark Channels',
+    'svc.thumb.f4': 'Design focused on attention psychology',
+    'svc.thumb.price': 'Packages from R$ 97',
+
+    // Service 3 - Branding
+    'svc.brand.title': 'Complete Visual Identity',
+    'svc.brand.desc': 'We build memorable brands. Far beyond a logo, we deliver the perfect visual ecosystem for your business.',
+    'svc.brand.f1': 'Professional Logo Creation',
+    'svc.brand.f2': 'Color palette and typography definition',
+    'svc.brand.f3': 'Brand Book (Brand Usage Manual)',
+    'svc.brand.f4': 'Social media and print applications',
+    'svc.brand.price': 'Starting at R$ 997',
+
+    // Service 4 - Restoration
+    'svc.restore.title': 'Historical Archive Recovery',
+    'svc.restore.desc': 'The past comes alive. We restore, colorize and animate old photographs and videos with artificial intelligence.',
+    'svc.restore.f1': 'Restoration of damaged or scratched photos',
+    'svc.restore.f2': 'Realistic colorization of B&W images',
+    'svc.restore.f3': 'Subtle photo animation (motion effect)',
+    'svc.restore.f4': 'Upscale and resolution enhancement to 4K',
+    'svc.restore.price': 'Starting at R$ 147 / piece',
 
     // Cases
     'cases.title': 'Featured Projects',
@@ -658,19 +739,21 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // Contact
     'contact.title': 'Direct Connection',
+    'contact.cta.heading': 'Ready to transform your vision into reality?',
+    'contact.cta.desc': 'Share a few details and I\'ll come back with a tailored quote within 24 business hours. Available for projects in Brazil and internationally.',
     'contact.form.title': 'Send your message',
-    'contact.form.desc': 'Fill out the form below and I\'ll get back to you within 24 hours',
+    'contact.form.desc': 'Tell me a bit about the project and I\'ll reply within 24 business hours.',
     'contact.social.title': 'Social Media',
-    'contact.social.desc': 'Connect with me on social media to follow my work',
+    'contact.social.desc': 'Follow my work, recent releases and behind-the-scenes updates.',
     'contact.location.title': 'Location',
     'contact.location.city': 'São Mateus do Sul, Paraná, Brazil',
-    'contact.location.available': 'Available for freelance projects throughout Brazil',
+    'contact.location.available': 'Available for remote collaboration and on-location production in Brazil and internationally',
 
     // Footer
     'footer.slogan': 'Transforming ideas into high-impact visual and digital narratives.',
     'footer.links': 'Quick Links',
     'footer.services': 'Services',
-    'footer.pricing': 'Packages & Pricing',
+    'footer.pricing': 'Our Services',
     'footer.svc.sites': 'Website Development',
     'footer.svc.ai': 'AI Systems',
     'footer.svc.video': 'Institutional Video',
@@ -684,10 +767,8 @@ const translations: Record<Lang, Record<string, string>> = {
     // Contact Form
     'form.name': 'Name',
     'form.name.placeholder': 'Your name',
-    'form.email': 'Email',
-    'form.email.placeholder': 'your@email.com',
-    'form.subject': 'Subject',
-    'form.subject.placeholder': 'Message subject',
+    'form.company': 'Company',
+    'form.company.placeholder': 'Your company name',
     'form.message': 'Message',
     'form.message.placeholder': 'Describe your project...',
     'form.send': 'Send Message',
@@ -719,95 +800,126 @@ const translations: Record<Lang, Record<string, string>> = {
     'services.custom.title': 'Custom project?',
     'services.custom.desc': "Have a project that doesn't fit the packages above? No problem! Every project is unique and we can create a custom package to meet your needs.",
     'services.custom.cta': 'Talk about my project',
-    'svc.drone': 'Aerial Drone Filming',
-    'svc.drone.desc': 'Unique aerial perspective footage for real estate, events and businesses',
-    'svc.drone.f1': 'ANAC certified pilot',
-    'svc.drone.f2': 'Professional DJI equipment',
-    'svc.drone.f3': '4K/60fps filming',
-    'svc.drone.f4': 'Basic editing included',
-    'svc.drone.f5': 'Delivery within 7 days',
-    'svc.drone.p1': 'Basic',
-    'svc.drone.p1d': 'Up to 30 min flight, 5 edited shots',
-    'svc.drone.p2': 'Professional',
-    'svc.drone.p2d': 'Up to 1h flight, 8 edited shots, color grading',
-    'svc.drone.p3': 'Premium',
-    'svc.drone.p3d': 'Up to 2h flight, fully edited video, music',
+    'svc.drone': 'Drone Cinematography',
+    'svc.drone.desc': 'Aerial footage for brands, destinations, real estate and events that need scale and polish.',
+    'svc.drone.f1': 'Licensed pilot and professional flight planning',
+    'svc.drone.f2': 'DJI drone setup for commercial-grade capture',
+    'svc.drone.f3': '4K aerial footage with cinematic framing',
+    'svc.drone.f4': 'Color and editing aligned with the final campaign',
+    'svc.drone.f5': 'Delivery prepared for web, ads and presentations',
+    'svc.drone.p1': 'Essential aerial coverage',
+    'svc.drone.p1d': 'Targeted capture session with selected hero shots',
+    'svc.drone.p2': 'Campaign support',
+    'svc.drone.p2d': 'Broader aerial coverage with graded selects and edit-ready assets',
+    'svc.drone.p3': 'Signature aerial package',
+    'svc.drone.p3d': 'Full aerial storytelling package with polished delivery',
     'svc.motion': 'Motion Design & 3D Animation',
-    'svc.motion.desc': 'Animated content that sets your brand apart on social media',
-    'svc.motion.f1': '2D and 3D animations',
-    'svc.motion.f2': 'After Effects and Cinema 4D',
-    'svc.motion.f3': 'Animated visual identity',
-    'svc.motion.f4': 'Social media formats',
-    'svc.motion.f5': 'Unlimited revisions',
-    'svc.motion.p1': 'Animated Logo',
-    'svc.motion.p1d': 'Logo in motion, 5-10 seconds, 2 revisions',
-    'svc.motion.p2': 'Social Media Video',
-    'svc.motion.p2d': '15-30 seconds, full animation',
-    'svc.motion.p3': 'Full Motion',
-    'svc.motion.p3d': '60-90 seconds, 3D animation, soundtrack',
-    'svc.production': 'Full Audiovisual Production',
-    'svc.production.desc': 'From script to final delivery, professional cinematic projects',
-    'svc.production.f1': 'Script and storyboard',
-    'svc.production.f2': 'Professional capture',
-    'svc.production.f3': 'Lighting and audio',
-    'svc.production.f4': 'Editing and post-production',
-    'svc.production.f5': 'Color grading and finishing',
-    'svc.production.p1': 'Short Institutional',
-    'svc.production.p1d': 'Up to 2 minutes, 1 day of shooting',
-    'svc.production.p2': 'Full Institutional',
-    'svc.production.p2d': 'Up to 5 minutes, 2 days, interviews',
-    'svc.production.p3': 'Documentary',
-    'svc.production.p3d': 'Up to 15 minutes, multiple locations',
-    'svc.editing': 'Professional Video Editing',
-    'svc.editing.desc': 'High-quality post-production with professional tools',
-    'svc.editing.f1': 'Adobe Premiere Pro',
-    'svc.editing.f2': 'Professional color grading',
-    'svc.editing.f3': 'Subtitles and graphics',
-    'svc.editing.f4': 'Audio mixing',
-    'svc.editing.f5': 'Multi-platform export',
-    'svc.editing.p1': 'Reel/Shorts',
-    'svc.editing.p1d': 'Up to 60 seconds, cuts and music',
-    'svc.editing.p2': 'Full Video',
-    'svc.editing.p2d': 'Up to 10 minutes, effects and graphics',
-    'svc.editing.p3': 'Advanced Post-Production',
-    'svc.editing.p3d': 'VFX, compositing, animation',
-    'svc.music': 'Music Video',
-    'svc.music.desc': 'Cinematic production for artists and bands',
-    'svc.music.f1': 'Creative direction',
-    'svc.music.f2': 'Professional chroma key',
-    'svc.music.f3': 'Multi-camera capture',
-    'svc.music.f4': 'VFX and motion graphics',
-    'svc.music.f5': 'YouTube/Spotify delivery',
-    'svc.music.p1': 'Simple Music Video',
-    'svc.music.p1d': 'Single location, 1 day, full editing',
-    'svc.music.p2': 'Conceptual Music Video',
-    'svc.music.p2d': 'Script, 2 locations, visual effects',
-    'svc.music.p3': 'Premium Music Video',
-    'svc.music.p3d': 'Full production, multiple locations, VFX',
-    'svc.ai': 'AI Production',
-    'svc.ai.desc': 'Artificial intelligence integrated into the creative workflow',
-    'svc.ai.f1': 'Visual concept generation',
-    'svc.ai.f2': 'AI-assisted scripts',
-    'svc.ai.f3': 'AI pre-visualization',
-    'svc.ai.f4': 'Upscaling and restoration',
-    'svc.ai.f5': 'ElevenLabs dubbing',
-    'svc.ai.p1': 'Visual Concept',
-    'svc.ai.p1d': '10 AI concept images',
-    'svc.ai.p2': 'AI Pre-Production',
-    'svc.ai.p2d': 'AI storyboard + script + concepts',
-    'svc.ai.p3': 'Hybrid Production',
-    'svc.ai.p3d': 'Video with AI-generated elements',
+    'svc.motion.desc': 'Animated pieces that help the brand feel more distinctive and more current.',
+    'svc.motion.f1': '2D, 3D and composited motion work',
+    'svc.motion.f2': 'After Effects, Cinema 4D and hybrid workflows',
+    'svc.motion.f3': 'Animated brand assets and visual systems',
+    'svc.motion.f4': 'Versions prepared for social, ads and presentations',
+    'svc.motion.f5': 'Refinement focused on clarity and finish',
+    'svc.motion.p1': 'Logo and identity animation',
+    'svc.motion.p1d': 'Short-form animated ident with a polished reveal',
+    'svc.motion.p2': 'Campaign motion piece',
+    'svc.motion.p2d': 'Motion content for launches, ads or branded communication',
+    'svc.motion.p3': 'Full motion package',
+    'svc.motion.p3d': 'Broader 3D or mixed-media animation with layered delivery',
+    'svc.production': 'Audiovisual Production',
+    'svc.production.desc': 'From concept to final cut, films built to communicate clearly and elevate perception.',
+    'svc.production.f1': 'Creative direction, script support and planning',
+    'svc.production.f2': 'Professional filming for brand and institutional content',
+    'svc.production.f3': 'Lighting, sound and production coordination',
+    'svc.production.f4': 'Editing, post-production and delivery versions',
+    'svc.production.f5': 'Color, polish and final finishing',
+    'svc.production.p1': 'Core institutional film',
+    'svc.production.p1d': 'Lean production scope for a concise brand film',
+    'svc.production.p2': 'Expanded brand film',
+    'svc.production.p2d': 'Broader scope with interviews, supporting scenes and campaign-ready edits',
+    'svc.production.p3': 'High-end documentary or campaign scope',
+    'svc.production.p3d': 'Multi-location production with stronger narrative depth and finishing',
+    'svc.editing': 'Editing & Post-Production',
+    'svc.editing.desc': 'Post-production for projects that need stronger rhythm, clarity and polish.',
+    'svc.editing.f1': 'Editing in professional broadcast-grade workflows',
+    'svc.editing.f2': 'Color grading and visual consistency',
+    'svc.editing.f3': 'Graphics, captions and motion support',
+    'svc.editing.f4': 'Sound clean-up and mix preparation',
+    'svc.editing.f5': 'Exports tailored to each channel',
+    'svc.editing.p1': 'Short-form edit',
+    'svc.editing.p1d': 'Concise cut for reels, ads or fast-turn social content',
+    'svc.editing.p2': 'Campaign or institutional edit',
+    'svc.editing.p2d': 'Longer-form edit with graphics, pacing and finishing',
+    'svc.editing.p3': 'Advanced post-production',
+    'svc.editing.p3d': 'Compositing, VFX, cleanup and a higher-end finish',
+    'svc.music': 'Music Video Production',
+    'svc.music.desc': 'Concept-driven production for artists and releases that need stronger visual identity.',
+    'svc.music.f1': 'Creative direction and concept development',
+    'svc.music.f2': 'Studio or location-based filming',
+    'svc.music.f3': 'Multi-camera coverage and performance capture',
+    'svc.music.f4': 'VFX, motion and visual treatments',
+    'svc.music.f5': 'Delivery prepared for launch and distribution',
+    'svc.music.p1': 'Performance-based video',
+    'svc.music.p1d': 'Lean shoot focused on performance and solid finishing',
+    'svc.music.p2': 'Concept-driven release',
+    'svc.music.p2d': 'Expanded visual treatment with narrative or stylized direction',
+    'svc.music.p3': 'Signature music video',
+    'svc.music.p3d': 'Broader production scope with multiple looks, locations and finish layers',
+    'svc.ai': 'AI-Assisted Production',
+    'svc.ai.desc': 'AI integrated where it speeds up development, concepts and delivery support.',
+    'svc.ai.f1': 'Concept generation and mood exploration',
+    'svc.ai.f2': 'AI-assisted scripting and pre-production support',
+    'svc.ai.f3': 'Pre-visualization and creative testing',
+    'svc.ai.f4': 'Restoration, upscaling and enhancement',
+    'svc.ai.f5': 'Voice, dubbing and hybrid production support',
+    'svc.ai.p1': 'Concept pack',
+    'svc.ai.p1d': 'Visual references and concept exploration for early-stage direction',
+    'svc.ai.p2': 'AI pre-production',
+    'svc.ai.p2d': 'Storyboard, script support and concept material for planning',
+    'svc.ai.p3': 'Hybrid AI production',
+    'svc.ai.p3d': 'Video delivery that combines filmed material with AI-assisted elements',
+    'aa.s1.tag': 'Service',
+    'aa.s1.title': 'Lead handling and first-response flows',
+    'aa.s1.desc': 'Automations for first contact, qualification and repeated questions across channels.',
+    'aa.s1.f1': 'Faster replies with consistent information',
+    'aa.s1.f2': 'Lead capture and routing to the right person',
+    'aa.s1.f3': 'Less manual follow-up at the top of the funnel',
+    'aa.s2.tag': 'Operations',
+    'aa.s2.title': 'Internal workflow automation',
+    'aa.s2.desc': 'Connected steps for approvals, handoffs, reminders and repetitive internal tasks.',
+    'aa.s2.f1': 'Less operational friction',
+    'aa.s2.f2': 'Fewer manual handoffs between tools',
+    'aa.s2.f3': 'More consistency across the routine',
+    'aa.s3.tag': 'Content',
+    'aa.s3.title': 'Content and briefing support',
+    'aa.s3.desc': 'Assistive flows for collecting information, preparing briefs and generating first drafts.',
+    'aa.s3.f1': 'Structured intake and briefing collection',
+    'aa.s3.f2': 'Faster first drafts and internal documentation',
+    'aa.s3.f3': 'More time for strategy and review',
+    'aa.s4.tag': 'Insights',
+    'aa.s4.title': 'Reporting and visibility',
+    'aa.s4.desc': 'Automatic organization of data and recurring updates for teams that need clearer decision-making.',
+    'aa.s4.f1': 'Dashboards and recurring summaries',
+    'aa.s4.f2': 'Less time spent compiling updates',
+    'aa.s4.f3': 'Faster visibility into what needs action',
+    'aa.p1': 'The team answers the same questions manually every day.',
+    'aa.p2': 'Leads arrive, but nobody qualifies or routes them consistently.',
+    'aa.p3': 'Internal handoffs depend too much on memory and chat messages.',
+    'aa.p4': 'Reports take too long to assemble and quickly go out of date.',
+    'aa.p5': 'The operation has bottlenecks, but no one has time to map them properly.',
+    'aa.h1.title': 'Map the current workflow',
+    'aa.h1.desc': 'We identify where time is being lost, which steps repeat the most and where the highest friction sits.',
+    'aa.h2.title': 'Prioritize the right automation',
+    'aa.h2.desc': 'Not everything should be automated. We choose the parts that create the clearest operational gain.',
+    'aa.h3.title': 'Build, test and validate',
+    'aa.h3.desc': 'The automation is structured, tested and adjusted around the real daily routine before scaling.',
+    'aa.h4.title': 'Monitor and refine',
+    'aa.h4.desc': 'Once live, the flow is reviewed and improved so it remains reliable as the operation evolves.',
   },
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('lang') as Lang
-      if (saved === 'pt' || saved === 'en') return saved
-    }
-    return 'pt'
-  })
+  const [lang, setLang] = useState<Lang>(resolveInitialLang)
 
   useEffect(() => {
     localStorage.setItem('lang', lang)

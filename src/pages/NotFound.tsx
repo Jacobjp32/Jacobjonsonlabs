@@ -4,6 +4,7 @@ import { Home, ArrowLeft, AlertTriangle } from "lucide-react"
 import GlowButton from "@/components/GlowButton"
 import ParticleBackground from "@/components/ParticleBackground"
 import { useEffect, useState } from "react"
+import { getHomePath } from "@/lib/seo"
 
 // Glitch text effect
 function GlitchText({ text, className = '' }: { text: string; className?: string }) {
@@ -17,9 +18,10 @@ function GlitchText({ text, className = '' }: { text: string; className?: string
 }
 
 export default function NotFound() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const [scramble, setScramble] = useState('')
   const chars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`01'
+  const homePath = getHomePath(lang)
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -87,7 +89,7 @@ export default function NotFound() {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Link to="/">
+          <Link to={homePath}>
             <GlowButton size="lg" glowColor="pink">
               <Home className="mr-2 h-5 w-5" />
               Base Principal

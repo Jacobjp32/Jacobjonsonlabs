@@ -3,49 +3,81 @@
 @tailwind utilities;
 
 :root {
-  /* Neural Cinema Theme - Futuristic Dark with Neon Accents */
-  --background: 260 20% 6%;
-  --foreground: 195 30% 90%;
-  
-  --card: 260 15% 10%;
-  --card-foreground: 195 30% 90%;
-  
-  --primary: 330 100% 50%;
+  --background: 222 28% 8%;
+  --foreground: 210 24% 95%;
+
+  --card: 222 22% 11%;
+  --card-foreground: 210 24% 95%;
+
+  --primary: 335 100% 59%;
   --primary-foreground: 0 0% 100%;
-  
-  --secondary: 185 100% 48%;
-  --secondary-foreground: 0 0% 100%;
-  
-  --accent: 115 100% 55%;
-  --accent-foreground: 0 0% 0%;
-  
-  --muted: 260 10% 20%;
-  --muted-foreground: 195 15% 55%;
-  
-  --destructive: 0 85% 60%;
+
+  --secondary: 188 95% 58%;
+  --secondary-foreground: 222 28% 8%;
+
+  --accent: 122 76% 58%;
+  --accent-foreground: 222 28% 8%;
+
+  --muted: 220 15% 20%;
+  --muted-foreground: 214 14% 70%;
+
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  
-  --border: 195 40% 20%;
-  --input: 260 10% 12%;
-  --ring: 330 100% 50%;
-  
-  --radius: 0.75rem;
+
+  --border: 220 14% 20%;
+  --input: 220 18% 16%;
+  --ring: 335 100% 59%;
+
+  --radius: 1rem;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  html {
+    scroll-behavior: smooth;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-image:
+      radial-gradient(circle at top, rgba(0, 245, 255, 0.08), transparent 32%),
+      radial-gradient(circle at 82% 12%, rgba(255, 0, 110, 0.12), transparent 26%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 24rem);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Orbitron", "Space Grotesk", sans-serif;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary {
+    @apply outline-none;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: rgba(255, 0, 110, 0.22);
+    color: hsl(var(--foreground));
   }
 }
 
@@ -54,8 +86,8 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   @media (min-width: 640px) {
@@ -65,18 +97,73 @@
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .container {
+      max-width: 1280px;
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px;
     }
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 1000;
+    transform: translateY(-160%);
+    border-radius: 999px;
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .premium-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(180deg, black 0%, black 62%, transparent 100%);
+  }
+
+  .cinematic-surface {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+      rgba(11, 14, 22, 0.6);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px);
+  }
+
+  .floating-card {
+    transform: translate3d(0, 0, 0);
   }
 }
 
-/* Custom scrollbar */
+@media (min-width: 1024px) {
+  .floating-card {
+    animation: studio-float 8s ease-in-out infinite;
+  }
+}
+
+@keyframes studio-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -84,51 +171,33 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.5);
-  border-radius: 4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 0, 110, 0.45),
+    rgba(0, 245, 255, 0.45)
+  );
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 0, 110, 0.8),
+    rgba(0, 245, 255, 0.8)
+  );
 }
 
-/* Parallax effect for hero video */
-.parallax-slow {
-  will-change: transform;
-}
-
-/* Smooth parallax on scroll */
-@media (prefers-reduced-motion: no-preference) {
-  .parallax-container {
-    perspective: 1px;
-    overflow-y: auto;
-    overflow-x: hidden;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-}
 
-/* Scroll-triggered animations for all sections */
-section {
-  animation: fadeSlideIn 0.8s ease-out both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 30%;
-}
-
-@keyframes fadeSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Fallback for browsers that don't support animation-timeline */
-@supports not (animation-timeline: view()) {
-  section {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

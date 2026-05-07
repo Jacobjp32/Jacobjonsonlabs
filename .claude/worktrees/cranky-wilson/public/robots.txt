@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: Atualizar URL do sitemap para domínio definitivo quando disponível.
+Sitemap: https://jacobjonson.netlify.app/sitemap.xml

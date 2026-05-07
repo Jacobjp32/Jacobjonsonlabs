@@ -1,133 +1,308 @@
-import { Camera, Plane as Drone, Sparkles, Play, Check, Brain, Mic } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import ParticleBackground from "@/components/ParticleBackground";
+import { useEffect } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Camera,
+  CheckCircle2,
+  MessageCircle,
+  Mic,
+  Plane as Drone,
+  Play,
+  Sparkles,
+  Brain,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import Navbar from "@/components/Navbar";
 import GlowButton from "@/components/GlowButton";
 import NeonCard from "@/components/NeonCard";
-import Navbar from "@/components/Navbar";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import ScrollReveal from "@/components/ScrollReveal";
 import { useI18n } from "@/i18n";
+import { applyPageSeo, getHomePath } from "@/lib/seo";
 
 export default function Services() {
-  const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const isEnglish = lang === "en";
+  const pageMeta = isEnglish
+    ? {
+        title: "Services | Jacob Jonson",
+        description:
+          "Premium audiovisual services for brands, agencies and institutional projects in Brazil and internationally, including drone cinematography, editing and creative post-production.",
+      }
+    : {
+        title: "Serviços | Jacob Jonson",
+        description:
+          "Serviços audiovisuais premium para marcas, empresas e projetos institucionais no Brasil e no exterior, incluindo drone, edição e pós-produção criativa.",
+      };
 
-  const svcKeys = ['drone', 'motion', 'production', 'editing', 'music', 'ai'] as const;
-  const svcIcons = [Drone, Sparkles, Camera, Play, Mic, Brain];
-  const svcColors = ['cyan', 'pink', 'green', 'yellow', 'pink', 'cyan'] as const;
-  const svcPrices = [
-    ['R$ 500', 'R$ 900', 'R$ 1.500'],
-    ['R$ 400', 'R$ 800', 'R$ 2.000'],
-    ['R$ 2.500', 'R$ 4.500', 'R$ 8.000'],
-    ['R$ 300', 'R$ 800', 'R$ 2.000'],
-    ['R$ 3.500', 'R$ 6.000', 'R$ 12.000'],
-    ['R$ 300', 'R$ 800', 'R$ 2.500'],
-  ];
+  useEffect(() => {
+    applyPageSeo({
+      lang,
+      title: pageMeta.title,
+      description: pageMeta.description,
+      pathname: isEnglish ? "/services" : "/servicos",
+    });
+  }, [isEnglish, lang, pageMeta.description, pageMeta.title]);
 
-  const services = svcKeys.map((key, i) => ({
+  const homePath = `${getHomePath(lang)}#services`;
+
+  const serviceKeys = ["drone", "motion", "production", "editing", "music", "ai"] as const;
+  const serviceIcons = [Drone, Sparkles, Camera, Play, Mic, Brain];
+  const serviceColors = ["cyan", "pink", "green", "yellow", "pink", "cyan"] as const;
+
+  const packageLabels = isEnglish
+    ? ["Base scope", "Strategic scope", "Premium scope"]
+    : ["Escopo base", "Escopo estratégico", "Escopo premium"];
+
+  const packageNotes = isEnglish
+    ? [
+        "A lean starting point for smaller demands and punctual productions.",
+        "A stronger structure for recurring content, campaigns and more complete delivery.",
+        "Built for projects that need more direction, polish and perceived value.",
+      ]
+    : [
+        "Ponto de partida enxuto para demandas menores e produções pontuais.",
+        "Estrutura mais forte para conteúdo recorrente, campanhas e entregas mais completas.",
+        "Pensado para projetos que precisam de mais direção, acabamento e percepção de valor.",
+      ];
+
+  const services = serviceKeys.map((key, index) => ({
     title: t(`svc.${key}`),
-    icon: svcIcons[i],
-    color: svcColors[i],
+    icon: serviceIcons[index],
+    color: serviceColors[index],
     description: t(`svc.${key}.desc`),
-    features: [1,2,3,4,5].map(n => t(`svc.${key}.f${n}`)),
-    packages: [1,2,3].map(n => ({
+    features: [1, 2, 3, 4, 5].map((n) => t(`svc.${key}.f${n}`)),
+    packages: [1, 2, 3].map((n, packageIndex) => ({
       name: t(`svc.${key}.p${n}`),
-      price: svcPrices[i][n-1],
       details: t(`svc.${key}.p${n}d`),
+      scopeLabel: packageLabels[packageIndex],
+      scopeNote: packageNotes[packageIndex],
     })),
   }));
 
+  const requestQuote = (serviceTitle: string, packageName?: string) => {
+    const message = encodeURIComponent(
+      isEnglish
+        ? `Hello! I want to request a quote for ${serviceTitle}${packageName ? ` - ${packageName}` : ""}.`
+        : `Olá! Quero solicitar um orçamento para ${serviceTitle}${packageName ? ` - ${packageName}` : ""}.`
+    );
+
+    window.open(`https://wa.me/5542988283963?text=${message}`, "_blank", "noopener,noreferrer");
+  };
+
+  const copy = isEnglish
+    ? {
+        eyebrow: "Services",
+        title: "Audiovisual services shaped around scope, strategy and delivery standard.",
+        description:
+          "From institutional films and branded campaigns to drone cinematography, editing and creative post-production, each scope is tailored to the objective, format and finish your project actually needs.",
+        highlights: [
+          "Custom quotes based on scope and deliverables",
+          "Direction aligned to business goals and distribution",
+          "Production, post and digital support under one lead",
+        ],
+        formatsTitle: "How these scopes work",
+        formatsText:
+          "Use the scopes below as a guide to the level of production each service can take. Final quotes depend on complexity, crew, shooting time, travel, revisions and post-production depth.",
+        quoteButton: "Request quote",
+        serviceButton: "Quote this project",
+        customTitle: "Need a custom production scope?",
+        customText:
+          "For branded campaigns, institutional films, music videos, launches or projects that also need landing pages or automation, the best route is a tailored quote.",
+        customButton: "Discuss my project",
+      }
+    : {
+        eyebrow: "Serviços",
+        title: "Soluções audiovisuais pensadas por escopo de projeto, não por tabela genérica de preço.",
+        description:
+          "De filmes institucionais e campanhas a captação com drone, edição e pós-produção criativa, cada serviço é desenhado de acordo com o objetivo, o formato e o padrão de entrega que o seu projeto precisa.",
+        highlights: [
+          "Orçamento personalizado para cada demanda",
+          "Escopo alinhado ao objetivo, formato e padrão de entrega",
+          "Audiovisual, edição e apoio digital sob uma direção única",
+        ],
+        formatsTitle: "Como ler estes blocos de serviço",
+        formatsText:
+          "Os blocos abaixo mostram o tipo de escopo que cada serviço pode assumir. O valor final depende de direção, tempo de captação, equipe, deslocamento, revisões e profundidade de pós-produção.",
+        quoteButton: "Fazer orçamento",
+        serviceButton: "Orçar este projeto",
+        customTitle: "Precisa de um projeto totalmente sob medida?",
+        customText:
+          "Para campanhas, institucionais, clipes, lançamentos ou projetos integrados com frente digital, o melhor caminho é um diagnóstico direto e um orçamento personalizado.",
+        customButton: "Falar sobre meu projeto",
+      };
+
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <WhatsAppButton phoneNumber="5542988283963" />
-      <ParticleBackground />
 
-      <section className="relative pt-28 pb-24">
-        <div className="container relative z-10">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              {t('services.title')}
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              {t('services.subtitle')}
-            </p>
-            <GlowButton
-              glowColor="cyan"
-              onClick={() => navigate('/')}
-            >
-              {t('services.back')}
-            </GlowButton>
-          </div>
+      <main className="relative overflow-x-clip pb-20">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-0 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute right-0 top-[24rem] h-[24rem] w-[24rem] rounded-full bg-secondary/10 blur-3xl" />
+        </div>
 
-          <div className="space-y-16">
-            {services.map((service, index) => (
-              <NeonCard key={index} borderColor={service.color} className="overflow-hidden">
-                <div className="grid md:grid-cols-[1fr_2fr] gap-8">
-                  <div>
-                    <service.icon className="h-16 w-16 mb-4 text-primary" />
-                    <h2 className="text-3xl font-bold mb-3">{service.title}</h2>
-                    <p className="text-muted-foreground mb-6">{service.description}</p>
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">{t('services.features')}</h4>
-                      {service.features.map((f, fi) => (
-                        <div key={fi} className="flex items-center gap-2 text-sm">
-                          <Check className="h-4 w-4 text-accent flex-shrink-0" />
-                          <span>{f}</span>
-                        </div>
-                      ))}
+        <section className="pt-28 pb-16">
+          <div className="container">
+            <ScrollReveal className="mx-auto max-w-4xl text-center">
+              <Link
+                to={homePath}
+                className="mb-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground transition hover:text-foreground"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                {isEnglish ? "Back to portfolio" : "Voltar ao portfólio"}
+              </Link>
+
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+                {copy.eyebrow}
+              </div>
+
+              <h1 className="mt-6 text-4xl leading-tight sm:text-5xl lg:text-6xl">
+                {copy.title}
+              </h1>
+              <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+                {copy.description}
+              </p>
+
+              <div className="mt-10 grid gap-3 sm:grid-cols-3">
+                {copy.highlights.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-background/45 px-4 py-4 text-sm text-muted-foreground"
+                  >
+                    <div className="mb-2 flex items-center justify-center gap-2 text-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-accent" />
+                      <span className="font-medium">{item}</span>
                     </div>
                   </div>
+                ))}
+              </div>
 
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    {service.packages.map((pkg, pi) => (
-                      <div
-                        key={pi}
-                        className={`rounded-lg p-6 border transition-all hover:scale-105 ${
-                          pi === 2
-                            ? 'border-primary/50 bg-primary/5 shadow-[0_0_20px_rgba(255,0,110,0.1)]'
-                            : 'border-border/50 bg-background/30'
-                        }`}
-                      >
-                        <h4 className="font-bold text-lg mb-2">{pkg.name}</h4>
-                        <div className="text-3xl font-bold text-primary mb-3">{pkg.price}</div>
-                        <p className="text-sm text-muted-foreground mb-4">{pkg.details}</p>
-                        <GlowButton
-                          size="sm"
-                          glowColor={pi === 2 ? 'pink' : 'cyan'}
-                          onClick={() => {
-                            const msg = encodeURIComponent(`Olá! Tenho interesse no pacote ${pkg.name} de ${service.title} (${pkg.price}).`);
-                            window.open(`https://wa.me/5542988283963?text=${msg}`, '_blank');
-                          }}
-                          className="w-full"
-                        >
-                          {t('services.budget')}
-                        </GlowButton>
+              <div className="mt-8">
+                <GlowButton
+                  size="lg"
+                  glowColor="pink"
+                  onClick={() => requestQuote(isEnglish ? "audiovisual project" : "projeto audiovisual")}
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  {copy.quoteButton}
+                </GlowButton>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="pb-16">
+          <div className="container max-w-4xl">
+            <ScrollReveal>
+              <NeonCard borderColor="cyan">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary/80">
+                  {copy.formatsTitle}
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                  {copy.formatsText}
+                </p>
+              </NeonCard>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="pb-20">
+          <div className="container">
+            <div className="space-y-10">
+              {services.map((service, index) => (
+                <ScrollReveal key={service.title} delay={index * 60}>
+                  <NeonCard borderColor={service.color} className="overflow-hidden">
+                    <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+                      <div>
+                        <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/12 bg-white/5">
+                          <service.icon className="h-6 w-6 text-foreground" />
+                        </div>
+                        <h2 className="text-3xl">{service.title}</h2>
+                        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                          {service.description}
+                        </p>
+
+                        <div className="mt-6 space-y-3">
+                          {service.features.map((feature) => (
+                            <div key={feature} className="flex items-start gap-3 text-sm text-muted-foreground">
+                              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
+                              <span>{feature}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="grid gap-4 md:grid-cols-3">
+                        {service.packages.map((pkg, packageIndex) => (
+                          <div
+                            key={pkg.name}
+                            className={`rounded-2xl border p-5 ${
+                              packageIndex === 2
+                                ? "border-primary/30 bg-primary/8"
+                                : "border-white/10 bg-white/5"
+                            }`}
+                          >
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-secondary/80">
+                              {pkg.scopeLabel}
+                            </p>
+                            <h3 className="mt-3 text-xl font-bold">{pkg.name}</h3>
+                            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                              {pkg.details}
+                            </p>
+                            <p className="mt-4 text-xs leading-relaxed text-muted-foreground/90">
+                              {pkg.scopeNote}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => requestQuote(service.title, pkg.name)}
+                              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-3 text-sm font-semibold text-foreground transition hover:border-primary/40 hover:text-primary"
+                            >
+                              {copy.serviceButton}
+                              <ArrowRight className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </NeonCard>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-24">
+          <div className="container">
+            <ScrollReveal className="mx-auto max-w-3xl">
+              <NeonCard borderColor="green" className="text-center">
+                <h2 className="text-3xl">{copy.customTitle}</h2>
+                <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+                  {copy.customText}
+                </p>
+                <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                  <GlowButton
+                    size="lg"
+                    glowColor="green"
+                    onClick={() => requestQuote(isEnglish ? "custom project" : "projeto personalizado")}
+                  >
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    {copy.customButton}
+                  </GlowButton>
+                  <a
+                    href="mailto:jacobjonson32@gmail.com"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-foreground transition hover:text-secondary"
+                  >
+                    jacobjonson32@gmail.com
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
                 </div>
               </NeonCard>
-            ))}
+            </ScrollReveal>
           </div>
-
-          <div className="text-center mt-16">
-            <NeonCard borderColor="green" className="max-w-3xl mx-auto">
-              <h3 className="text-2xl font-bold mb-4">{t('services.custom.title')}</h3>
-              <p className="text-muted-foreground mb-6">{t('services.custom.desc')}</p>
-              <GlowButton
-                size="lg"
-                glowColor="green"
-                onClick={() => {
-                  const msg = encodeURIComponent('Olá! Gostaria de discutir um projeto personalizado.');
-                  window.open(`https://wa.me/5542988283963?text=${msg}`, '_blank');
-                }}
-              >
-                {t('services.custom.cta')}
-              </GlowButton>
-            </NeonCard>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </div>
   );
 }

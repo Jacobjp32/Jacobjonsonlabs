@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jacobjonsonfilmmaker.netlify.app/sitemap.xml
