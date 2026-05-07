@@ -1,2 +1,8 @@
 # Local Netlify folder
 .netlify
+node_modules/
+dist/
+dist-site-jacob.zip
+.netlify/
+.env
+.env.local
