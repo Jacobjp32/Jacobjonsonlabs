@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --background: 222 28% 8%;
+  --background: 222 30% 9%;
   --foreground: 210 24% 95%;
 
-  --card: 222 22% 11%;
+  --card: 222 22% 12%;
   --card-foreground: 210 24% 95%;
 
   --primary: 335 100% 59%;
@@ -18,7 +18,7 @@
   --accent: 122 76% 58%;
   --accent-foreground: 222 28% 8%;
 
-  --muted: 220 15% 20%;
+  --muted: 220 15% 22%;
   --muted-foreground: 214 14% 70%;
 
   --destructive: 0 84% 60%;
@@ -43,10 +43,13 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: hsl(var(--background));
     background-image:
-      radial-gradient(circle at top, rgba(0, 245, 255, 0.08), transparent 32%),
-      radial-gradient(circle at 82% 12%, rgba(255, 0, 110, 0.12), transparent 26%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 24rem);
+      radial-gradient(circle at 18% 0%, rgba(0, 245, 255, 0.09), transparent 28rem),
+      radial-gradient(circle at 84% 10%, rgba(255, 0, 110, 0.12), transparent 26rem),
+      radial-gradient(circle at 72% 62%, rgba(75, 255, 102, 0.045), transparent 30rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.012) 48rem, rgba(0, 245, 255, 0.018) 100%);
+    background-attachment: fixed;
     min-height: 100vh;
   }
 
@@ -128,14 +131,14 @@
       linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
     background-size: 72px 72px;
-    mask-image: linear-gradient(180deg, black 0%, black 62%, transparent 100%);
+    mask-image: linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.9) 48%, rgba(0, 0, 0, 0.68) 100%);
   }
 
   .cinematic-surface {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
-      rgba(11, 14, 22, 0.6);
+      linear-gradient(135deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.035)),
+      rgba(15, 19, 30, 0.68);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(18px);
   }

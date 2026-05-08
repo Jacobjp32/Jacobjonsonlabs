@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
-  ArrowUp,
   Bot,
   BrainCircuit,
   Camera,
@@ -105,9 +104,9 @@ export default function Home() {
       }
     : {
         title:
-          "Jacob Jonson | AI Creative Studio para Audiovisual, IA e Experiencias Digitais",
+          "Jacob Jonson | AI Creative Studio para Audiovisual, IA e Experiências Digitais",
         description:
-          "Direcao criativa, audiovisual cinematografico, IA generativa, design, web e automacao para marcas que precisam de presenca digital mais forte.",
+          "Direção criativa, audiovisual cinematográfico, IA generativa, design, web e automação para marcas que precisam de presença digital mais forte.",
       };
 
   useEffect(() => {
@@ -175,58 +174,58 @@ export default function Home() {
         workflowNote: "Core studio stack",
       }
     : {
-        skipLink: "Pular para o conteudo",
+        skipLink: "Pular para o conteúdo",
         hero: {
-          badge: "AI Creative Studio / Filme + IA + Design + Automacao",
-          title: "Filme, IA e sistemas digitais para marcas com presenca.",
+          badge: "AI Creative Studio / Filme + IA + Design + Automação",
+          title: "Filme, IA e sistemas digitais para marcas com presença.",
           description:
-            "Direciono e construo conteudo cinematografico, visuais generativos, landing pages, ativos de marca e fluxos de automacao com uma linha criativa clara.",
+            "Direciono e construo conteúdo cinematográfico, visuais generativos, landing pages, ativos de marca e fluxos de automação com uma linha criativa clara.",
           primaryCta: "Iniciar briefing",
           secondaryCta: "Assistir showreel",
           tertiaryCta: "Explorar cases",
-          reelLabel: "Showreel do studio",
+          reelLabel: "Showreel do estúdio",
           reelDescription:
-            "Direcao, ritmo, imagem com IA, motion e acabamento em um corte curto.",
+            "Direção, ritmo, imagem com IA, motion e acabamento em um corte curto.",
         },
         stats: [
-          { value: "15+", label: "anos entre filme, conteudo e comunicacao" },
-          { value: "60+", label: "videos, campanhas e ativos digitais entregues" },
-          { value: "IA", label: "workflows de imagem, video e conceito" },
-          { value: "WEB", label: "landing pages, sistemas e fluxos de automacao" },
+          { value: "15+", label: "anos entre filme, conteúdo e comunicação" },
+          { value: "60+", label: "vídeos, campanhas e ativos digitais entregues" },
+          { value: "IA", label: "fluxos de imagem, vídeo e conceito" },
+          { value: "WEB", label: "landing pages, sistemas e fluxos de automação" },
         ],
-        capabilitiesTitle: "What I Do",
-        capabilitiesHeading: "Um studio hibrido para a camada visual, digital e automatizada",
+        capabilitiesTitle: "O que faço",
+        capabilitiesHeading: "Um estúdio híbrido para a camada visual, digital e automatizada",
         capabilitiesDescription:
-          "O trabalho conecta direcao criativa, producao audiovisual, IA generativa, design de marca, interfaces web e automacoes praticas sem quebrar o projeto em partes soltas.",
-        workflowTitle: "AI Creative Workflow",
-        workflowHeading: "Da ideia bruta ao sistema criativo utilizavel",
+          "O trabalho conecta direção criativa, produção audiovisual, IA generativa, design de marca, interfaces web e automações práticas sem quebrar o projeto em partes soltas.",
+        workflowTitle: "Fluxo com IA",
+        workflowHeading: "Da ideia bruta ao sistema criativo utilizável",
         workflowDescription:
-          "A IA entra para explorar, pre-visualizar e acelerar. Direcao, criterio e acabamento final continuam humanos.",
-        projectsTitle: "Cases / Selected Projects",
-        projectsHeading: "Trabalhos selecionados entre filme, visuais com IA e ativos de lancamento",
+          "A IA entra para explorar, pré-visualizar e acelerar. Direção, critério e acabamento final continuam humanos.",
+        projectsTitle: "Cases / Projetos selecionados",
+        projectsHeading: "Trabalhos selecionados entre filme, visuais com IA e ativos de lançamento",
         projectsDescription:
-          "Um recorte de como o studio transforma narrativa, direcao visual e execucao digital em material util para campanha.",
-        experimentsTitle: "Experiments",
-        experimentsHeading: "Laboratorio criativo de imagem com IA, motion e interfaces",
+          "Um recorte de como o estúdio transforma narrativa, direção visual e execução digital em material útil para campanha.",
+        experimentsTitle: "Experimentos",
+        experimentsHeading: "Laboratório criativo de imagem com IA, motion e interfaces",
         experimentsDescription:
           "Testes de personagens, cenas, mundos, climas de interface e ideias de motion que podem virar campanha, ativo ou sistema visual.",
-        processTitle: "Behind the Process",
+        processTitle: "Por trás do processo",
         processHeading: "O pensamento antes do ativo final",
         processDescription:
-          "Antes de produzir, o projeto ganha posicionamento, referencias e mapa de entrega. O resultado e cinematografico, mas nasce pronto para canais, equipes e proximas acoes.",
-        contactTitle: "Construa o proximo sistema visual",
+          "Antes de produzir, o projeto ganha posicionamento, referências e mapa de entrega. O resultado é cinematográfico, mas nasce pronto para canais, equipes e próximas ações.",
+        contactTitle: "Construa o próximo sistema visual",
         contactHeading:
-          "Se o projeto precisa unir filme, IA, design e execucao digital na mesma direcao, vamos organizar o briefing.",
+          "Se o projeto precisa unir filme, IA, design e execução digital na mesma direção, vamos organizar o briefing.",
         footer:
-          "AI Creative Studio para conteudo cinematografico, experiencias digitais, visuais generativos e ativos de marca prontos para automacao.",
+          "AI Creative Studio para conteúdo cinematográfico, experiências digitais, visuais generativos e ativos de marca prontos para automação.",
         seeVideo: "Assistir case",
         backToTop: "Voltar ao topo",
         projectBriefing: "Briefing do projeto",
-        projectBriefingNote: "Conte o objetivo, os canais, referencias e o que precisa mudar na percepcao.",
+        projectBriefingNote: "Conte o objetivo, os canais, referências e o que precisa mudar na percepção.",
         mobileQuote: "Briefing",
         mobileReel: "Showreel",
         bestFit: "Mais indicado para",
-        workflowNote: "Stack central do studio",
+        workflowNote: "Base criativa do estúdio",
       };
 
   const audienceTags = isEnglish
@@ -238,11 +237,11 @@ export default function Home() {
         "Institutions updating their public image",
       ]
     : [
-        "Marcas que precisam de percepcao premium",
-        "Lancamentos que precisam de filme e web",
-        "Fundadores e equipes de comunicacao",
-        "Agencias que precisam de execucao hibrida",
-        "Instituicoes atualizando imagem publica",
+        "Marcas que precisam de percepção premium",
+        "Lançamentos que precisam de filme e web",
+        "Fundadores e equipes de comunicação",
+        "Agências que precisam de execução híbrida",
+        "Instituições atualizando imagem pública",
       ];
 
   const capabilities: CapabilityItem[] = isEnglish
@@ -274,26 +273,26 @@ export default function Home() {
       ]
     : [
         {
-          title: "Conteudo cinematografico e direcao criativa",
+          title: "Conteúdo cinematográfico e direção criativa",
           description:
-            "Filmes de marca, pecas de campanha e edicoes guiadas por estrategia, ritmo e linguagem visual precisa.",
-          bullets: ["Conceito, apoio de roteiro e direcao", "Edicao, motion e finalizacao", "Drone, VFX, cor e tratamento de som"],
+            "Filmes de marca, peças de campanha e edições guiadas por estratégia, ritmo e linguagem visual precisa.",
+          bullets: ["Conceito, apoio de roteiro e direção", "Edição, motion e finalização", "Drone, VFX, cor e tratamento de som"],
           icon: Clapperboard,
           color: "pink",
         },
         {
-          title: "IA generativa para imagens, video e conceito",
+          title: "IA generativa para imagens, vídeo e conceito",
           description:
-            "Desenvolvimento visual com IA para cenas, personagens, boards, mundos de campanha e testes criativos rapidos.",
-          bullets: ["Direcao de prompt e look development", "Workflows de imagem e video com IA", "Pacotes de pre-visualizacao para decisao"],
+            "Desenvolvimento visual com IA para cenas, personagens, boards, mundos de campanha e testes criativos rápidos.",
+          bullets: ["Direção de prompt e desenvolvimento visual", "Fluxos de imagem e vídeo com IA", "Pacotes de pré-visualização para decisão"],
           icon: WandSparkles,
           color: "cyan",
         },
         {
-          title: "Sistemas de marca, experiencias web e automacao",
+          title: "Sistemas de marca, experiências web e automação",
           description:
-            "Landing pages, ativos digitais e fluxos de automacao que carregam a ideia depois que o video e publicado.",
-          bullets: ["Identidade visual e ativos de campanha", "Landing pages e interfaces digitais", "Automacoes com IA para briefings, leads e operacao"],
+            "Landing pages, ativos digitais e fluxos de automação que carregam a ideia depois que o vídeo é publicado.",
+          bullets: ["Identidade visual e ativos de campanha", "Landing pages e interfaces digitais", "Automações com IA para briefings, leads e operação"],
           icon: Workflow,
           color: "green",
         },
@@ -331,25 +330,25 @@ export default function Home() {
           step: "01",
           title: "Posicionamento e briefing",
           description:
-            "Definimos objetivo, publico, tom, canais e a percepcao que o projeto precisa criar.",
+            "Definimos objetivo, público, tom, canais e a percepção que o projeto precisa criar.",
         },
         {
           step: "02",
-          title: "Exploracao com IA e rota visual",
+          title: "Exploração com IA e rota visual",
           description:
-            "Criamos moodframes, rotas de prompt, boards e referencias antes de fechar o caminho de producao.",
+            "Criamos moodframes, rotas de prompt, boards e referências antes de fechar o caminho de produção.",
         },
         {
           step: "03",
-          title: "Producao, edicao e design",
+          title: "Produção, edição e design",
           description:
-            "Filmamos, editamos, desenhamos e construimos ativos com uma linguagem unica para video, imagem, web e social.",
+            "Filmamos, editamos, desenhamos e construímos ativos com uma linguagem única para vídeo, imagem, web e social.",
         },
         {
           step: "04",
-          title: "Ativos de lancamento e automacao",
+          title: "Ativos de lançamento e automação",
           description:
-            "Preparamos versoes de campanha, modulos de landing page, formularios, fluxos de lead e apoio de conteudo.",
+            "Preparamos versões de campanha, módulos de landing page, formulários, fluxos de lead e apoio de conteúdo.",
         },
       ];
 
@@ -409,35 +408,35 @@ export default function Home() {
       ]
     : [
         {
-          title: "Showreel de Assinatura do Studio",
-          category: "Filme / Motion / Direcao Criativa",
+          title: "Showreel de Assinatura do Estúdio",
+          category: "Filme / Motion / Direção Criativa",
           description:
-            "Uma prova rapida da linguagem do studio: enquadramento, ritmo, drone, edicao, motion e acabamento.",
+            "Uma prova rápida da linguagem do estúdio: enquadramento, ritmo, drone, edição, motion e acabamento.",
           challenge:
-            "Mostrar rapidamente que o trabalho vai alem da captacao de video e sustenta um posicionamento criativo mais forte.",
+            "Mostrar rapidamente que o trabalho vai além da captação de vídeo e sustenta um posicionamento criativo mais forte.",
           approach:
-            "Curadoria de fragmentos cinematograficos em um reel curto, com ritmo, contraste e autoridade visual.",
+            "Curadoria de fragmentos cinematográficos em um reel curto, com ritmo, contraste e autoridade visual.",
           deliverable:
-            "Reel hero, ativo de pitch e referencia visual para campanhas e propostas futuras.",
-          result: "Primeira impressao mais forte para clientes e parceiros",
-          highlights: ["Ritmo cinematografico", "Ativo pronto para pitch", "Posicionamento claro do studio"],
+            "Reel hero, ativo de pitch e referência visual para campanhas e propostas futuras.",
+          result: "Primeira impressão mais forte para clientes e parceiros",
+          highlights: ["Ritmo cinematográfico", "Ativo pronto para pitch", "Posicionamento claro do estúdio"],
           poster: "/JACOBCYBER1.webp",
           videoSrc: "/showreel.mp4",
           color: "pink",
         },
         {
-          title: "Brand Film com Camada Digital",
-          category: "Audiovisual / Web / Conversao",
+          title: "Filme de Marca com Camada Digital",
+          category: "Audiovisual / Web / Conversão",
           description:
-            "Conteudo de marca pensado para ir alem do filme principal: site, landing page, social e material comercial.",
+            "Conteúdo de marca pensado para ir além do filme principal: site, landing page, social e material comercial.",
           challenge:
-            "Elevar a percepcao da marca e dar a campanha um destino util depois que o publico assiste ao video.",
+            "Elevar a percepção da marca e dar à campanha um destino útil depois que o público assiste ao vídeo.",
           approach:
-            "Conectar direcao, edicao, estrutura de pagina e ativos de campanha para a mesma narrativa atravessar os pontos de contato.",
+            "Conectar direção, edição, estrutura de página e ativos de campanha para a mesma narrativa atravessar os pontos de contato.",
           deliverable:
-            "Brand film, cortes sociais, visuais de landing page e materiais de campanha prontos para CTA.",
-          result: "Uma linha visual do video ate a landing page",
-          highlights: ["Direcao e pos-producao", "Ativos criativos prontos para web", "CTA e caminho de lead alinhados"],
+            "Filme de marca, cortes sociais, visuais de landing page e materiais de campanha prontos para CTA.",
+          result: "Uma linha visual do vídeo até a landing page",
+          highlights: ["Direção e pós-produção", "Ativos criativos prontos para web", "CTA e caminho de lead alinhados"],
           poster: "/JACOBESTUDIO2.webp",
           videoSrc: "/video1.mp4",
           color: "cyan",
@@ -446,15 +445,15 @@ export default function Home() {
           title: "Mundos Visuais com IA e Testes de Motion",
           category: "IA Generativa / Design / VFX",
           description:
-            "Pesquisa visual com IA expandida para motion, conceitos de campanha, personagens e direcao de arte cinematografica.",
+            "Pesquisa visual com IA expandida para motion, conceitos de campanha, personagens e direção de arte cinematográfica.",
           challenge:
-            "Explorar rotas visuais mais ricas antes da producao sem travar a tomada de decisao criativa.",
+            "Explorar rotas visuais mais ricas antes da produção sem travar a tomada de decisão criativa.",
           approach:
-            "Usar IA de imagem e video como camada de pre-visualizacao, depois refinar as melhores rotas com design e motion.",
+            "Usar IA de imagem e vídeo como camada de pré-visualização, depois refinar as melhores rotas com design e motion.",
           deliverable:
             "Moodframes, rotas de prompt, testes de motion e ativos de conceito para planejamento de campanha.",
-          result: "Decisao visual mais rapida e com mais alcance",
-          highlights: ["Exploracao de imagem e video com IA", "Motion e compositing", "Look development para mundos de campanha"],
+          result: "Decisão visual mais rápida e com mais alcance",
+          highlights: ["Exploração de imagem e vídeo com IA", "Motion e compositing", "Desenvolvimento visual para mundos de campanha"],
           poster: "/JACOBCYBER2.webp",
           videoSrc: "/video2.mp4",
           color: "green",
@@ -482,10 +481,10 @@ export default function Home() {
           image: "/JACOBHORIZONTEDEEVENTOS.webp",
         },
         {
-          title: "AI Portrait and Avatar Systems",
-          tag: "Brand presence",
-          description: "Stylized portraits and avatars for campaigns, social identity and digital presence.",
-          image: "/JACOBTRONO1.webp",
+          title: "Synthetic Identity and Campaign Avatars",
+          tag: "AI identity",
+          description: "Premium portrait systems, avatar language and character studies for brand campaigns.",
+          image: "/JACOBMULHERCYBER.webp",
         },
       ]
     : [
@@ -497,21 +496,21 @@ export default function Home() {
         },
         {
           title: "Atmosferas Cyber para Marca",
-          tag: "Look development",
-          description: "Luz, climas de interface e codigos visuais para marcas que precisam de uma linguagem mais futurista.",
+          tag: "Desenvolvimento visual",
+          description: "Luz, climas de interface e códigos visuais para marcas que precisam de uma linguagem mais futurista.",
           image: "/JACOBCYBER2.webp",
         },
         {
-          title: "Concept Frames para Pitches",
-          tag: "Pre-visualizacao",
-          description: "Rotas visuais rapidas para pitch decks, landing pages, thumbnails e direcao inicial de narrativa.",
+          title: "Frames Conceituais para Apresentações",
+          tag: "Pré-visualização",
+          description: "Rotas visuais rápidas para apresentações, landing pages, thumbnails e direção inicial de narrativa.",
           image: "/JACOBHORIZONTEDEEVENTOS.webp",
         },
         {
-          title: "Sistemas de Retrato e Avatar com IA",
-          tag: "Presenca de marca",
-          description: "Retratos estilizados e avatares para campanhas, identidade social e presenca digital.",
-          image: "/JACOBTRONO1.webp",
+          title: "Identidade Sintética e Avatares de Campanha",
+          tag: "Identidade com IA",
+          description: "Sistemas de retrato, linguagem de avatar e estudos de personagem para campanhas de marca.",
+          image: "/JACOBMULHERCYBER.webp",
         },
       ];
 
@@ -538,21 +537,21 @@ export default function Home() {
       ]
     : [
         {
-          title: "Posicao antes da estetica",
+          title: "Posição antes da estética",
           description:
-            "O visual so funciona quando clareia a oferta, aumenta valor percebido e apoia a proxima acao.",
+            "O visual só funciona quando clareia a oferta, aumenta valor percebido e apoia a próxima ação.",
           icon: BrainCircuit,
         },
         {
-          title: "Stack criativo hibrido",
+          title: "Stack criativo híbrido",
           description:
-            "Camera, edicao, design, IA, web e automacao sao planejados como um pipeline criativo conectado.",
+            "Câmera, edição, design, IA, web e automação são planejados como um pipeline criativo conectado.",
           icon: Layers3,
         },
         {
           title: "Ativos feitos para canais",
           description:
-            "As entregas nascem prontas para site, midia paga, social, decks, equipes internas e reutilizacao.",
+            "As entregas nascem prontas para site, mídia paga, social, decks, equipes internas e reutilização.",
           icon: Cpu,
         },
       ];
@@ -582,35 +581,44 @@ export default function Home() {
       ]
     : [
         {
-          label: "Inputs",
-          title: "Oferta, publico, canais",
-          description: "Briefing, alvo de percepcao, tom, referencias, concorrentes e contexto de lancamento.",
+          label: "Entradas",
+          title: "Oferta, público, canais",
+          description: "Briefing, alvo de percepção, tom, referências, concorrentes e contexto de lançamento.",
         },
         {
-          label: "AI Lab",
+          label: "Lab IA",
           title: "Moodframes e rotas de prompt",
-          description: "Frames de conceito, territorios visuais, testes de personagem, cenas e boards.",
+          description: "Frames de conceito, territórios visuais, testes de personagem, cenas e quadros visuais.",
         },
         {
-          label: "Producao",
-          title: "Filme, edicao, motion, design",
-          description: "Captacao, pos-producao, tratamentos de motion, modulos web e ativos de marca.",
+          label: "Produção",
+          title: "Filme, edição, motion, design",
+          description: "Captação, pós-produção, tratamentos de motion, módulos web e ativos de marca.",
         },
         {
           label: "Entrega",
-          title: "Sistema de ativos pronto para lancar",
-          description: "Videos finais, cortes sociais, visuais de landing page, fluxos de lead e regras criativas reutilizaveis.",
+          title: "Sistema de ativos pronto para lançar",
+          description: "Vídeos finais, cortes sociais, visuais de landing page, fluxos de lead e regras criativas reutilizáveis.",
         },
       ];
 
-  const studioStack = [
-    { label: "Audiovisual", icon: Camera },
-    { label: "Motion", icon: Film },
-    { label: "Design", icon: Palette },
-    { label: "Generative AI", icon: Bot },
-    { label: "Web", icon: Code2 },
-    { label: "Automation", icon: Zap },
-  ];
+  const studioStack = isEnglish
+    ? [
+        { label: "Audiovisual", icon: Camera },
+        { label: "Motion", icon: Film },
+        { label: "Design", icon: Palette },
+        { label: "Generative AI", icon: Bot },
+        { label: "Web", icon: Code2 },
+        { label: "Automation", icon: Zap },
+      ]
+    : [
+        { label: "Audiovisual", icon: Camera },
+        { label: "Motion", icon: Film },
+        { label: "Design", icon: Palette },
+        { label: "IA generativa", icon: Bot },
+        { label: "Web", icon: Code2 },
+        { label: "Automação", icon: Zap },
+      ];
 
   const contactInfo = isEnglish
     ? [
@@ -619,9 +627,9 @@ export default function Home() {
         "Proposal shaped around scope, channels, assets and launch needs",
       ]
     : [
-        "Direcao criativa, producao e execucao digital no mesmo fluxo",
-        "Colaboracao remota e producao presencial no Brasil ou exterior",
-        "Proposta montada por escopo, canais, ativos e necessidade de lancamento",
+        "Direção criativa, produção e execução digital no mesmo fluxo",
+        "Colaboração remota e produção presencial no Brasil ou exterior",
+        "Proposta montada por escopo, canais, ativos e necessidade de lançamento",
       ];
 
   const scrollToSection = (id: string) => {
@@ -636,10 +644,6 @@ export default function Home() {
     });
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <div className="min-h-screen">
       <a href="#main-content" className="skip-link">
@@ -652,6 +656,9 @@ export default function Home() {
           <div className="absolute left-1/2 top-0 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
           <div className="absolute right-0 top-[28rem] h-[28rem] w-[28rem] rounded-full bg-secondary/10 blur-3xl" />
           <div className="absolute left-0 top-[76rem] h-[30rem] w-[30rem] rounded-full bg-accent/8 blur-3xl" />
+          <div className="absolute right-[-6rem] top-[128rem] h-[32rem] w-[32rem] rounded-full bg-primary/8 blur-3xl" />
+          <div className="absolute left-[-8rem] top-[188rem] h-[34rem] w-[34rem] rounded-full bg-secondary/8 blur-3xl" />
+          <div className="absolute bottom-[18rem] right-[8%] h-[28rem] w-[28rem] rounded-full bg-accent/6 blur-3xl" />
         </div>
 
         <section id="hero" className="relative scroll-mt-28 pt-24 md:min-h-[92vh] md:scroll-mt-32 md:pt-28">
@@ -788,7 +795,7 @@ export default function Home() {
                               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/62">
                                 {(isEnglish
                                   ? ["Direction", "AI lab", "Digital layer"]
-                                  : ["Direcao", "AI lab", "Camada digital"])[index]}
+                                  : ["Direção", "Lab IA", "Camada digital"])[index]}
                               </span>
                             </div>
                             <h3 className="text-2xl">{item.title}</h3>
@@ -858,13 +865,13 @@ export default function Home() {
                       <div className="flex items-center gap-3">
                         <Frame className="h-5 w-5 text-primary" />
                         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/90">
-                          {isEnglish ? "Output" : "Saida"}
+                          {isEnglish ? "Output" : "Saída"}
                         </p>
                       </div>
                         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                         {isEnglish
                           ? "Films, campaign visuals, web pages, AI assets, motion pieces, landing-page modules and repeatable creative workflows."
-                          : "Filmes, visuais de campanha, paginas web, ativos com IA, pecas de motion, modulos de landing page e workflows criativos reutilizaveis."}
+                          : "Filmes, visuais de campanha, páginas web, ativos com IA, peças de motion, módulos de landing page e fluxos criativos reutilizáveis."}
                       </p>
                     </div>
                   </div>
@@ -912,7 +919,7 @@ export default function Home() {
                         <div className="grid gap-3">
                           {[
                             [isEnglish ? "Challenge" : "Desafio", project.challenge],
-                            [isEnglish ? "Studio response" : "Resposta do studio", project.approach],
+                            [isEnglish ? "Studio response" : "Resposta do estúdio", project.approach],
                             [isEnglish ? "Deliverable" : "Entrega", project.deliverable],
                           ].map(([label, value]) => (
                             <div key={label} className="rounded-2xl border border-white/10 bg-background/45 p-4">
@@ -954,7 +961,7 @@ export default function Home() {
                 <div className="flex flex-wrap gap-2">
                   {(isEnglish
                     ? ["AI video", "Concept frames", "Motion", "Brand systems", "Interfaces"]
-                    : ["Video com IA", "Concept frames", "Motion", "Sistemas de marca", "Interfaces"]).map((item) => (
+                    : ["Vídeo com IA", "Frames conceituais", "Motion", "Sistemas de marca", "Interfaces"]).map((item) => (
                     <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-muted-foreground">
                       {item}
                     </span>
@@ -1027,7 +1034,7 @@ export default function Home() {
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                       {isEnglish
                         ? "Instead of isolated files, the process creates assets, rules and decisions that can feed the next film, page, campaign or automation."
-                        : "Em vez de arquivos isolados, o processo cria ativos, regras e decisoes que alimentam o proximo filme, pagina, campanha ou automacao."}
+                        : "Em vez de arquivos isolados, o processo cria ativos, regras e decisões que alimentam o próximo filme, página, campanha ou automação."}
                     </p>
                   </div>
                   <div className="relative grid gap-3 md:grid-cols-4">
@@ -1076,11 +1083,11 @@ export default function Home() {
                       <MapPin className="h-4 w-4 text-secondary" />
                       <span>
                         <strong className="mr-2 text-foreground">{isEnglish ? "Base:" : "Base:"}</strong>
-                        Sao Mateus do Sul, PR
+                        São Mateus do Sul, PR
                       </span>
                     </div>
                     <div className="flex flex-wrap gap-3 pt-1">
-                      <a href={`https://wa.me/5542988283963?text=${encodeURIComponent(isEnglish ? "Hello! I would like to start a creative studio project." : "Ola! Gostaria de iniciar um projeto criativo com audiovisual, IA e digital.")}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-3 text-sm font-semibold text-foreground transition hover:border-accent/50 hover:text-accent">
+                      <a href={`https://wa.me/5542988283963?text=${encodeURIComponent(isEnglish ? "Hello! I would like to start a creative studio project." : "Olá! Gostaria de iniciar um projeto criativo com audiovisual, IA e digital.")}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-3 text-sm font-semibold text-foreground transition hover:border-accent/50 hover:text-accent">
                         <MessageCircle className="h-4 w-4" />
                         WhatsApp
                       </a>
@@ -1102,7 +1109,7 @@ export default function Home() {
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                     <Link to={getLocalizedPath("/ai-automation", lang)} className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold transition hover:border-accent/40 hover:text-accent">
-                      {isEnglish ? "AI automation" : "Automacao IA"}
+                      {isEnglish ? "AI automation" : "Automação IA"}
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -1164,10 +1171,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-
-      <button type="button" onClick={scrollToTop} className="fixed bottom-24 right-6 z-40 hidden h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-background/75 text-foreground transition hover:border-primary/40 hover:text-primary md:inline-flex" aria-label={copy.backToTop}>
-        <ArrowUp className="h-5 w-5" />
-      </button>
 
       <VideoModal isOpen={Boolean(activeVideo)} onClose={() => setActiveVideo(null)} title={activeVideo?.title ?? ""} videoSrc={activeVideo?.videoSrc ?? ""} poster={activeVideo?.poster} />
     </div>

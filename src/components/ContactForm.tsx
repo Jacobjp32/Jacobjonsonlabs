@@ -65,7 +65,7 @@ export default function ContactForm() {
           servicePlaceholder: "Selecione a principal demanda",
           message: "Briefing",
           messagePlaceholder:
-            "Conte o objetivo, canais, referencias e o que precisa mudar na percepcao ou na operacao.",
+            "Conte o objetivo, canais, referências e o que precisa mudar na percepção ou na operação.",
           submit: "Enviar briefing",
           sending: "Enviando...",
           note: "Prefere um caminho mais rápido? Envie seu briefing direto no WhatsApp.",
@@ -73,12 +73,12 @@ export default function ContactForm() {
           success: "Briefing enviado com sucesso. Retornarei em breve.",
           error: "Houve um problema ao enviar sua mensagem. Tente novamente.",
           services: [
-            "Brand film / conteudo cinematografico",
+            "Filme de marca / conteúdo cinematográfico",
             "Visuais com IA / desenvolvimento de conceito",
-            "Landing page / experiencia digital",
+            "Landing page / experiência digital",
             "Ativos de marca / sistema visual",
-            "Automacao / workflow criativo",
-            "Edicao / motion / VFX",
+            "Automação / fluxo criativo",
+            "Edição / motion / VFX",
             "Outro projeto",
           ],
         };
@@ -243,7 +243,7 @@ export default function ContactForm() {
             href={`https://wa.me/5542988283963?text=${encodeURIComponent(
               lang === "en"
                 ? "Hello! I would like to brief a project involving film, AI, design or digital experience."
-                : "Ola! Gostaria de iniciar um briefing para um projeto com audiovisual, IA, design ou experiencia digital."
+                : "Olá! Gostaria de iniciar um briefing para um projeto com audiovisual, IA, design ou experiência digital."
             )}`}
             target="_blank"
             rel="noopener noreferrer"

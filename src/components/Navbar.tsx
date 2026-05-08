@@ -33,10 +33,10 @@ export default function Navbar() {
       : {
           brand: "Jacob Jonson",
           links: [
-            { label: "What I Do", href: "#services" },
-            { label: "AI Workflow", href: "#workflow" },
-            { label: "Cases", href: "#projects" },
-            { label: "Experiments", href: "#experiments" },
+            { label: "O que faço", href: "#services" },
+            { label: "Fluxo com IA", href: "#workflow" },
+            { label: "Projetos", href: "#projects" },
+            { label: "Experimentos", href: "#experiments" },
             { label: "Processo", href: "#process" },
             { label: "Contato", href: "#contact" },
           ],

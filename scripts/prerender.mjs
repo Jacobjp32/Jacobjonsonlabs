@@ -10,9 +10,9 @@ const routes = [
     route: "/",
     lang: "pt-BR",
     ogLocale: "pt_BR",
-    title: "Jacob Jonson | AI Creative Studio, Experiencias Digitais e Audiovisual Cinematografico",
+    title: "Jacob Jonson | AI Creative Studio, Experiências Digitais e Audiovisual Cinematográfico",
     description:
-      "Studio criativo premium unindo audiovisual cinematografico, IA generativa, design visual, branding, desenvolvimento web e automacoes para marcas, campanhas e experiencias digitais.",
+      "Studio criativo premium unindo audiovisual cinematográfico, IA generativa, design visual, branding, desenvolvimento web e automações para marcas, campanhas e experiências digitais.",
     alternates: {
       pt: `${BASE_URL}/`,
       en: `${BASE_URL}/en`,

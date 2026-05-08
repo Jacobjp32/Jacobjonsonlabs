@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Routes, Route, useLocation, useNavigate } from
 import { Toaster } from 'sonner'
 import { I18nProvider, useI18n } from './i18n'
 import { getHomePath, getLocalizedPath, getPathLang, isLegacyServicesPath } from './lib/seo'
+import BackToTop from './components/BackToTop'
 import Home from './pages/Home'
 
 const AIAutomation = lazy(() => import('./pages/AIAutomation'))
@@ -73,6 +74,7 @@ function App() {
     <I18nProvider>
       <BrowserRouter>
         <LocaleRouteSync />
+        <BackToTop />
         <Toaster 
           position="top-right" 
           toastOptions={{
