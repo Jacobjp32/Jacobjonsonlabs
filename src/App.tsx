@@ -7,7 +7,9 @@ import BackToTop from './components/BackToTop'
 import Home from './pages/Home'
 
 const AIAutomation = lazy(() => import('./pages/AIAutomation'))
+const CaseStudy = lazy(() => import('./pages/CaseStudy'))
 const DigitalAssets = lazy(() => import('./pages/DigitalAssets'))
+const Products = lazy(() => import('./pages/Products'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function LocaleRouteSync() {
@@ -97,12 +99,18 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/en" element={<Home />} />
+            <Route path="/cases/:caseSlug" element={<CaseStudy />} />
+            <Route path="/en/cases/:caseSlug" element={<CaseStudy />} />
             <Route path="/servicos" element={<LegacyServicesRedirect />} />
             <Route path="/services" element={<LegacyServicesRedirect />} />
             <Route path="/en/services" element={<LegacyServicesRedirect />} />
             <Route path="/automacao-ia" element={<AIAutomation />} />
             <Route path="/ai-automation" element={<AIAutomation />} />
             <Route path="/en/ai-automation" element={<AIAutomation />} />
+            <Route path="/produtos" element={<Products />} />
+            <Route path="/loja" element={<Products />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/en/products" element={<Products />} />
             <Route path="/ativos-digitais" element={<DigitalAssets />} />
             <Route path="/digital-assets" element={<DigitalAssets />} />
             <Route path="/en/digital-assets" element={<DigitalAssets />} />

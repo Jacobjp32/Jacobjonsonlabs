@@ -19,11 +19,11 @@ export default function Navbar() {
       ? {
           brand: "Jacob Jonson",
           links: [
-            { label: "What I Do", href: "#services" },
-            { label: "AI Workflow", href: "#workflow" },
-            { label: "Cases", href: "#projects" },
+            { label: "What I deliver", href: "#services" },
+            { label: "Projects", href: "#projects" },
             { label: "Experiments", href: "#experiments" },
             { label: "Process", href: "#process" },
+            { label: "Products", href: "#products" },
             { label: "Contact", href: "#contact" },
           ],
           cta: "Start brief",
@@ -33,11 +33,11 @@ export default function Navbar() {
       : {
           brand: "Jacob Jonson",
           links: [
-            { label: "O que faço", href: "#services" },
-            { label: "Fluxo com IA", href: "#workflow" },
+            { label: "O que entrego", href: "#services" },
             { label: "Projetos", href: "#projects" },
             { label: "Experimentos", href: "#experiments" },
             { label: "Processo", href: "#process" },
+            { label: "Produtos", href: "#products" },
             { label: "Contato", href: "#contact" },
           ],
           cta: "Iniciar briefing",

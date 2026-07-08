@@ -1,6 +1,11 @@
+import { getCaseByPath, getCaseLangByPath } from "@/data/caseStudies";
+
 export type SeoLang = "pt" | "en";
 
-const BASE_URL = "https://jacobjonsonfilmmaker.netlify.app";
+export const BASE_URL = "https://jacobjonsonfilmmaker.netlify.app";
+const SOCIAL_IMAGE_URL = `${BASE_URL}/JACOBCYBER1.webp`;
+const SOCIAL_IMAGE_ALT =
+  "Jacob Jonson em estética cyberpunk cinematográfica para AI Creative Studio";
 
 const htmlLangByLocale: Record<SeoLang, string> = {
   pt: "pt-BR",
@@ -19,9 +24,14 @@ const getBasePath = (pathname: string) => {
 
 export const getPathLang = (pathname: string): SeoLang | null => {
   const basePath = getBasePath(pathname);
+  const caseLang = getCaseLangByPath(basePath);
 
   if (basePath === "/" || !basePath) {
     return null;
+  }
+
+  if (caseLang) {
+    return caseLang;
   }
 
   if (basePath === "/en" || basePath.startsWith("/en/")) {
@@ -29,13 +39,13 @@ export const getPathLang = (pathname: string): SeoLang | null => {
   }
 
   if (
-    ["/servicos", "/ativos-digitais", "/automacao-ia"].includes(basePath)
+    ["/servicos", "/ativos-digitais", "/automacao-ia", "/produtos", "/loja"].includes(basePath)
   ) {
     return "pt";
   }
 
   if (
-    ["/services", "/digital-assets", "/ai-automation"].includes(basePath)
+    ["/services", "/digital-assets", "/ai-automation", "/products"].includes(basePath)
   ) {
     return "en";
   }
@@ -50,6 +60,11 @@ export const isLegacyServicesPath = (pathname: string) => {
 
 export const getLocalizedPath = (pathname: string, lang: SeoLang) => {
   const basePath = getBasePath(pathname);
+  const caseStudy = getCaseByPath(basePath);
+
+  if (caseStudy) {
+    return caseStudy.routes[lang];
+  }
 
   switch (basePath) {
     case "/en":
@@ -62,6 +77,11 @@ export const getLocalizedPath = (pathname: string, lang: SeoLang) => {
     case "/en/ai-automation":
     case "/automacao-ia":
       return lang === "en" ? "/en/ai-automation" : "/automacao-ia";
+    case "/products":
+    case "/en/products":
+    case "/produtos":
+    case "/loja":
+      return lang === "en" ? "/en/products" : "/produtos";
     case "/":
       return lang === "en" ? "/en" : "/";
     default:
@@ -74,6 +94,12 @@ export const getHomePath = (lang: SeoLang) => getLocalizedPath("/", lang);
 const buildLocalizedUrl = (pathname: string, lang: SeoLang) => {
   const localizedPath = getLocalizedPath(pathname, lang);
   return `${BASE_URL}${localizedPath}`;
+};
+
+const normalizeImageUrl = (imageUrl?: string) => {
+  if (!imageUrl) return SOCIAL_IMAGE_URL;
+  if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
+  return `${BASE_URL}${imageUrl.startsWith("/") ? imageUrl : `/${imageUrl}`}`;
 };
 
 const updateMetaTag = (selector: string, content: string) => {
@@ -103,15 +129,21 @@ export const applyPageSeo = ({
   title,
   description,
   pathname,
+  imageUrl,
+  imageAlt,
 }: {
   lang: SeoLang;
   title: string;
   description: string;
   pathname: string;
+  imageUrl?: string;
+  imageAlt?: string;
 }) => {
   const ptUrl = buildLocalizedUrl(pathname, "pt");
   const enUrl = buildLocalizedUrl(pathname, "en");
   const currentUrl = lang === "pt" ? ptUrl : enUrl;
+  const socialImageUrl = normalizeImageUrl(imageUrl);
+  const socialImageAlt = imageAlt ?? SOCIAL_IMAGE_ALT;
 
   document.title = title;
   document.documentElement.lang = htmlLangByLocale[lang];
@@ -122,8 +154,13 @@ export const applyPageSeo = ({
   updateMetaTag('meta[property="og:description"]', description);
   updateMetaTag('meta[property="og:url"]', currentUrl);
   updateMetaTag('meta[property="og:locale"]', ogLocaleByLang[lang]);
+  updateMetaTag('meta[property="og:image"]', socialImageUrl);
+  updateMetaTag('meta[property="og:image:secure_url"]', socialImageUrl);
+  updateMetaTag('meta[property="og:image:alt"]', socialImageAlt);
   updateMetaTag('meta[name="twitter:title"]', title);
   updateMetaTag('meta[name="twitter:description"]', description);
+  updateMetaTag('meta[name="twitter:image"]', socialImageUrl);
+  updateMetaTag('meta[name="twitter:image:alt"]', socialImageAlt);
 
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) {

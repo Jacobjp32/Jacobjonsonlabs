@@ -37,9 +37,10 @@ interface ScrollRevealProps {
   className?: string
   delay?: number
   direction?: 'up' | 'down' | 'left' | 'right' | 'none'
+  id?: string
 }
 
-export default function ScrollReveal({ children, className = '', delay = 0, direction = 'up' }: ScrollRevealProps) {
+export default function ScrollReveal({ children, className = '', delay = 0, direction = 'up', id }: ScrollRevealProps) {
   const { ref, isVisible } = useScrollReveal()
 
   const directionClasses = {
@@ -52,6 +53,7 @@ export default function ScrollReveal({ children, className = '', delay = 0, dire
 
   return (
     <div
+      id={id}
       ref={ref}
       className={`transition-all duration-700 ease-out ${
         isVisible 
