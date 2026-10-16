@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Only the Netlify subdomain matches this host, so jacobjonsonlabs.com cannot loop.
+[[redirects]]
+  from = "https://jacobjonsonlabs.netlify.app/*"
+  to = "https://jacobjonsonlabs.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

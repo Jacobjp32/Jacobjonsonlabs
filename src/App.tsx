@@ -1,125 +1,96 @@
-import { Suspense, lazy, useEffect } from 'react'
-import { BrowserRouter, Navigate, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
-import { Toaster } from 'sonner'
-import { I18nProvider, useI18n } from './i18n'
-import { getHomePath, getLocalizedPath, getPathLang, isLegacyServicesPath } from './lib/seo'
-import BackToTop from './components/BackToTop'
-import Home from './pages/Home'
+import { Suspense, lazy } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { I18nProvider } from "./i18n";
+import { pages } from "./lib/routes";
+import Home from "./pages/Home";
 
-const AIAutomation = lazy(() => import('./pages/AIAutomation'))
-const CaseStudy = lazy(() => import('./pages/CaseStudy'))
-const DigitalAssets = lazy(() => import('./pages/DigitalAssets'))
-const Products = lazy(() => import('./pages/Products'))
-const NotFound = lazy(() => import('./pages/NotFound'))
+const Work = lazy(() => import("./pages/Work"));
+const Services = lazy(() => import("./pages/Services"));
+const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
+const VideoEditing = lazy(() => import("./pages/VideoEditing"));
+const Lab = lazy(() => import("./pages/Lab"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-function LocaleRouteSync() {
-  const { lang, setLang } = useI18n()
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isLegacyServicesPath(location.pathname)) {
-      const targetLang = getPathLang(location.pathname) ?? lang
-      const targetPath = getHomePath(targetLang)
-
-      if (targetLang !== lang) {
-        setLang(targetLang)
-      }
-
-      if (location.pathname !== targetPath || location.hash !== '#services' || location.search) {
-        navigate(
-          {
-            pathname: targetPath,
-            search: '',
-            hash: '#services',
-          },
-          { replace: true }
-        )
-      }
-
-      return
-    }
-
-    const pathLang = getPathLang(location.pathname)
-
-    if (pathLang && pathLang !== lang) {
-      setLang(pathLang)
-      return
-    }
-
-    const targetPath = getLocalizedPath(location.pathname, lang)
-
-    if (location.pathname !== targetPath || location.search) {
-      navigate(
-        {
-          pathname: targetPath,
-          search: '',
-          hash: location.hash,
-        },
-        { replace: true }
-      )
-    }
-  }, [lang, location.hash, location.pathname, location.search, navigate, setLang])
-
-  return null
+function LegacyRedirect({ to }: { to: string }) {
+  const location = useLocation();
+  return <Navigate to={{ pathname: to, hash: location.hash }} replace />;
 }
 
-function LegacyServicesRedirect() {
-  const location = useLocation()
-  const targetLang = getPathLang(location.pathname) ?? 'pt'
-
-  return <Navigate to={`${getHomePath(targetLang)}#services`} replace />
+function AppRoutes() {
+  return (
+    <Suspense
+      fallback={
+        <div className="grid min-h-screen place-items-center bg-background text-sm uppercase tracking-[0.18em] text-muted-foreground">
+          Loading
+        </div>
+      }
+    >
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/en" element={<Home />} />
+        <Route path="/en/" element={<Home />} />
+        <Route path="/work" element={<Work />} />
+        <Route path="/work/" element={<Work />} />
+        <Route path="/en/work" element={<Work />} />
+        <Route path="/en/work/" element={<Work />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/services/" element={<Services />} />
+        <Route path="/en/services" element={<Services />} />
+        <Route path="/en/services/" element={<Services />} />
+        <Route path="/services/web-development" element={<ServiceDetail service="web" />} />
+        <Route path="/services/web-development/" element={<ServiceDetail service="web" />} />
+        <Route path="/en/services/web-development" element={<ServiceDetail service="web" />} />
+        <Route path="/en/services/web-development/" element={<ServiceDetail service="web" />} />
+        <Route path="/services/automation" element={<ServiceDetail service="automation" />} />
+        <Route path="/services/automation/" element={<ServiceDetail service="automation" />} />
+        <Route path="/en/services/automation" element={<ServiceDetail service="automation" />} />
+        <Route path="/en/services/automation/" element={<ServiceDetail service="automation" />} />
+        <Route path="/services/video-editing" element={<VideoEditing />} />
+        <Route path="/services/video-editing/" element={<VideoEditing />} />
+        <Route path="/en/services/video-editing" element={<VideoEditing />} />
+        <Route path="/en/services/video-editing/" element={<VideoEditing />} />
+        <Route path="/lab" element={<Lab />} />
+        <Route path="/lab/" element={<Lab />} />
+        <Route path="/en/lab" element={<Lab />} />
+        <Route path="/en/lab/" element={<Lab />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/about/" element={<About />} />
+        <Route path="/en/about" element={<About />} />
+        <Route path="/en/about/" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact/" element={<Contact />} />
+        <Route path="/en/contact" element={<Contact />} />
+        <Route path="/en/contact/" element={<Contact />} />
+        <Route path="/servicos" element={<LegacyRedirect to={pages.services.pt} />} />
+        <Route path="/servicos/" element={<LegacyRedirect to={pages.services.pt} />} />
+        <Route path="/automacao-ia" element={<Navigate to={`${pages.services.pt}#automation`} replace />} />
+        <Route path="/automacao-ia/" element={<Navigate to={`${pages.services.pt}#automation`} replace />} />
+        <Route path="/ai-automation" element={<Navigate to={`${pages.services.en}#automation`} replace />} />
+        <Route path="/ai-automation/" element={<Navigate to={`${pages.services.en}#automation`} replace />} />
+        <Route path="/en/ai-automation" element={<Navigate to={`${pages.services.en}#automation`} replace />} />
+        <Route path="/en/ai-automation/" element={<Navigate to={`${pages.services.en}#automation`} replace />} />
+        <Route path="/ativos-digitais" element={<LegacyRedirect to={pages.lab.pt} />} />
+        <Route path="/ativos-digitais/" element={<LegacyRedirect to={pages.lab.pt} />} />
+        <Route path="/digital-assets" element={<LegacyRedirect to={pages.lab.en} />} />
+        <Route path="/digital-assets/" element={<LegacyRedirect to={pages.lab.en} />} />
+        <Route path="/en/digital-assets" element={<LegacyRedirect to={pages.lab.en} />} />
+        <Route path="/en/digital-assets/" element={<LegacyRedirect to={pages.lab.en} />} />
+        <Route path="/produtos" element={<LegacyRedirect to={pages.lab.pt} />} />
+        <Route path="/loja" element={<LegacyRedirect to={pages.lab.pt} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+  );
 }
 
-function App() {
+export default function App() {
   return (
     <I18nProvider>
       <BrowserRouter>
-        <LocaleRouteSync />
-        <BackToTop />
-        <Toaster 
-          position="top-right" 
-          toastOptions={{
-            style: {
-              background: 'hsl(260 15% 10%)',
-              border: '1px solid hsl(330 100% 50% / 0.3)',
-              color: 'hsl(195 30% 90%)',
-            },
-          }}
-        />
-        <Suspense
-          fallback={
-            <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
-              <div className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground">
-                Loading
-              </div>
-            </div>
-          }
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/en" element={<Home />} />
-            <Route path="/cases/:caseSlug" element={<CaseStudy />} />
-            <Route path="/en/cases/:caseSlug" element={<CaseStudy />} />
-            <Route path="/servicos" element={<LegacyServicesRedirect />} />
-            <Route path="/services" element={<LegacyServicesRedirect />} />
-            <Route path="/en/services" element={<LegacyServicesRedirect />} />
-            <Route path="/automacao-ia" element={<AIAutomation />} />
-            <Route path="/ai-automation" element={<AIAutomation />} />
-            <Route path="/en/ai-automation" element={<AIAutomation />} />
-            <Route path="/produtos" element={<Products />} />
-            <Route path="/loja" element={<Products />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/en/products" element={<Products />} />
-            <Route path="/ativos-digitais" element={<DigitalAssets />} />
-            <Route path="/digital-assets" element={<DigitalAssets />} />
-            <Route path="/en/digital-assets" element={<DigitalAssets />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <AppRoutes />
       </BrowserRouter>
     </I18nProvider>
-  )
+  );
 }
-
-export default App

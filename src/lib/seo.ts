@@ -1,173 +1,80 @@
-import { getCaseByPath, getCaseLangByPath } from "@/data/caseStudies";
+import type { Lang } from "./routes";
 
-export type SeoLang = "pt" | "en";
+export const BASE_URL = "https://jacobjonsonlabs.com";
+export const SOCIAL_IMAGE_PATH = "/og.jpg";
+export const SOCIAL_IMAGE_URL = `${BASE_URL}${SOCIAL_IMAGE_PATH}`;
+export const SOCIAL_IMAGE_WIDTH = "1200";
+export const SOCIAL_IMAGE_HEIGHT = "630";
 
-export const BASE_URL = "https://jacobjonsonfilmmaker.netlify.app";
-const SOCIAL_IMAGE_URL = `${BASE_URL}/JACOBCYBER1.webp`;
-const SOCIAL_IMAGE_ALT =
-  "Jacob Jonson em estética cyberpunk cinematográfica para AI Creative Studio";
-
-const htmlLangByLocale: Record<SeoLang, string> = {
-  pt: "pt-BR",
-  en: "en",
+const SOCIAL_IMAGE_ALT: Record<Lang, string> = {
+  pt: "Jacob Jonson, creative technologist e AI video producer",
+  en: "Jacob Jonson, creative technologist and AI video producer",
 };
 
-const ogLocaleByLang: Record<SeoLang, string> = {
-  pt: "pt_BR",
-  en: "en_US",
+export const KEYWORDS: Record<Lang, string> = {
+  pt: "creative technologist, AI video producer, vídeo com IA para empresas, experiências digitais, automação, edição de vídeo, Jacob Jonson",
+  en: "creative technologist, AI video producer, AI video for companies, digital experiences, automation, video editing, Jacob Jonson",
 };
 
-const getBasePath = (pathname: string) => {
-  if (!pathname) return "/";
-  return pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-};
+const htmlLang: Record<Lang, string> = { pt: "pt-BR", en: "en" };
+const ogLocale: Record<Lang, string> = { pt: "pt_BR", en: "en_US" };
 
-export const getPathLang = (pathname: string): SeoLang | null => {
-  const basePath = getBasePath(pathname);
-  const caseLang = getCaseLangByPath(basePath);
+const abs = (path: string) => `${BASE_URL}${path === "/" ? "/" : path}`;
 
-  if (basePath === "/" || !basePath) {
-    return null;
-  }
-
-  if (caseLang) {
-    return caseLang;
-  }
-
-  if (basePath === "/en" || basePath.startsWith("/en/")) {
-    return "en";
-  }
-
-  if (
-    ["/servicos", "/ativos-digitais", "/automacao-ia", "/produtos", "/loja"].includes(basePath)
-  ) {
-    return "pt";
-  }
-
-  if (
-    ["/services", "/digital-assets", "/ai-automation", "/products"].includes(basePath)
-  ) {
-    return "en";
-  }
-
-  return null;
-};
-
-export const isLegacyServicesPath = (pathname: string) => {
-  const basePath = getBasePath(pathname);
-  return ["/servicos", "/services", "/en/services"].includes(basePath);
-};
-
-export const getLocalizedPath = (pathname: string, lang: SeoLang) => {
-  const basePath = getBasePath(pathname);
-  const caseStudy = getCaseByPath(basePath);
-
-  if (caseStudy) {
-    return caseStudy.routes[lang];
-  }
-
-  switch (basePath) {
-    case "/en":
-      return lang === "en" ? "/en" : "/";
-    case "/digital-assets":
-    case "/en/digital-assets":
-    case "/ativos-digitais":
-      return lang === "en" ? "/en/digital-assets" : "/ativos-digitais";
-    case "/ai-automation":
-    case "/en/ai-automation":
-    case "/automacao-ia":
-      return lang === "en" ? "/en/ai-automation" : "/automacao-ia";
-    case "/products":
-    case "/en/products":
-    case "/produtos":
-    case "/loja":
-      return lang === "en" ? "/en/products" : "/produtos";
-    case "/":
-      return lang === "en" ? "/en" : "/";
-    default:
-      return basePath;
-  }
-};
-
-export const getHomePath = (lang: SeoLang) => getLocalizedPath("/", lang);
-
-const buildLocalizedUrl = (pathname: string, lang: SeoLang) => {
-  const localizedPath = getLocalizedPath(pathname, lang);
-  return `${BASE_URL}${localizedPath}`;
-};
-
-const normalizeImageUrl = (imageUrl?: string) => {
-  if (!imageUrl) return SOCIAL_IMAGE_URL;
-  if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
-  return `${BASE_URL}${imageUrl.startsWith("/") ? imageUrl : `/${imageUrl}`}`;
-};
-
-const updateMetaTag = (selector: string, content: string) => {
+const setMeta = (selector: string, content: string) => {
   const element = document.querySelector(selector);
-  if (element) {
-    element.setAttribute("content", content);
-  }
+  if (element) element.setAttribute("content", content);
 };
 
-const ensureAlternateLink = (hreflang: string, href: string) => {
-  let link = document.querySelector(
-    `link[rel="alternate"][hreflang="${hreflang}"]`
-  ) as HTMLLinkElement | null;
-
+const setLink = (rel: string, href: string, hreflang?: string) => {
+  const selector = hreflang
+    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+    : `link[rel="${rel}"]:not([hreflang])`;
+  let link = document.querySelector(selector) as HTMLLinkElement | null;
   if (!link) {
     link = document.createElement("link");
-    link.setAttribute("rel", "alternate");
-    link.setAttribute("hreflang", hreflang);
+    link.rel = rel;
+    if (hreflang) link.hreflang = hreflang;
     document.head.appendChild(link);
   }
-
-  link.setAttribute("href", href);
+  link.href = href;
 };
 
 export const applyPageSeo = ({
   lang,
   title,
   description,
-  pathname,
-  imageUrl,
-  imageAlt,
+  path,
+  alternate,
 }: {
-  lang: SeoLang;
+  lang: Lang;
   title: string;
   description: string;
-  pathname: string;
-  imageUrl?: string;
-  imageAlt?: string;
+  path: string;
+  alternate: { pt: string; en: string };
 }) => {
-  const ptUrl = buildLocalizedUrl(pathname, "pt");
-  const enUrl = buildLocalizedUrl(pathname, "en");
-  const currentUrl = lang === "pt" ? ptUrl : enUrl;
-  const socialImageUrl = normalizeImageUrl(imageUrl);
-  const socialImageAlt = imageAlt ?? SOCIAL_IMAGE_ALT;
-
+  const current = abs(path);
   document.title = title;
-  document.documentElement.lang = htmlLangByLocale[lang];
-
-  updateMetaTag('meta[name="description"]', description);
-  updateMetaTag('meta[name="language"]', htmlLangByLocale[lang]);
-  updateMetaTag('meta[property="og:title"]', title);
-  updateMetaTag('meta[property="og:description"]', description);
-  updateMetaTag('meta[property="og:url"]', currentUrl);
-  updateMetaTag('meta[property="og:locale"]', ogLocaleByLang[lang]);
-  updateMetaTag('meta[property="og:image"]', socialImageUrl);
-  updateMetaTag('meta[property="og:image:secure_url"]', socialImageUrl);
-  updateMetaTag('meta[property="og:image:alt"]', socialImageAlt);
-  updateMetaTag('meta[name="twitter:title"]', title);
-  updateMetaTag('meta[name="twitter:description"]', description);
-  updateMetaTag('meta[name="twitter:image"]', socialImageUrl);
-  updateMetaTag('meta[name="twitter:image:alt"]', socialImageAlt);
-
-  const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) {
-    canonical.setAttribute("href", currentUrl);
-  }
-
-  ensureAlternateLink("pt-BR", ptUrl);
-  ensureAlternateLink("en", enUrl);
-  ensureAlternateLink("x-default", `${BASE_URL}/`);
+  document.documentElement.lang = htmlLang[lang];
+  setMeta('meta[name="description"]', description);
+  setMeta('meta[name="keywords"]', KEYWORDS[lang]);
+  setMeta('meta[name="language"]', htmlLang[lang]);
+  setMeta('meta[property="og:title"]', title);
+  setMeta('meta[property="og:description"]', description);
+  setMeta('meta[property="og:url"]', current);
+  setMeta('meta[property="og:locale"]', ogLocale[lang]);
+  setMeta('meta[property="og:image"]', SOCIAL_IMAGE_URL);
+  setMeta('meta[property="og:image:secure_url"]', SOCIAL_IMAGE_URL);
+  setMeta('meta[property="og:image:type"]', "image/jpeg");
+  setMeta('meta[property="og:image:width"]', SOCIAL_IMAGE_WIDTH);
+  setMeta('meta[property="og:image:height"]', SOCIAL_IMAGE_HEIGHT);
+  setMeta('meta[property="og:image:alt"]', SOCIAL_IMAGE_ALT[lang]);
+  setMeta('meta[name="twitter:title"]', title);
+  setMeta('meta[name="twitter:description"]', description);
+  setMeta('meta[name="twitter:image"]', SOCIAL_IMAGE_URL);
+  setMeta('meta[name="twitter:image:alt"]', SOCIAL_IMAGE_ALT[lang]);
+  setLink("canonical", current);
+  setLink("alternate", abs(alternate.pt), "pt-BR");
+  setLink("alternate", abs(alternate.en), "en");
+  setLink("alternate", `${BASE_URL}/`, "x-default");
 };

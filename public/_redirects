@@ -1,2 +1,4 @@
-
+# Host-scoped so jacobjonsonlabs.com does not match and cannot loop.
+# Must stay above the SPA fallback: _redirects is applied before netlify.toml.
+https://jacobjonsonlabs.netlify.app/* https://jacobjonsonlabs.com/:splat 301!
 /* /index.html 200
