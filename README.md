@@ -35,25 +35,13 @@ npm run preview
 
 ## ✏️ Configurações Importantes
 
-### 1. Formulário de Contato (Formspree)
-Edite `src/components/ContactForm.tsx` e substitua `YOUR_FORM_ID`:
-```javascript
-await fetch("https://formspree.io/f/SEU_ID_AQUI", { ... })
-```
+### 1. Formulário de contato (Netlify Forms)
+O formulário `contact` é detectado pelo Netlify a partir do HTML estático e do formulário React. As notificações por e-mail são configuradas no painel do site, não no repositório.
 
-### 2. WhatsApp
-Edite os arquivos `src/pages/Home.tsx` e `src/pages/Services.tsx`:
-```javascript
-<WhatsAppButton phoneNumber="5542XXXXXXXXX" />
-```
-
-### 3. Vídeos do YouTube
-Em `src/pages/Home.tsx`, substitua os `videoId: "dQw4w9WgXcQ"` pelos IDs reais dos seus vídeos.
-
-### 4. URL do Site
+### 2. URL do site
 Após o deploy, atualize a URL em `index.html`:
 ```html
-<meta property="og:url" content="https://seu-site.netlify.app/" />
+<meta property="og:url" content="https://jacobjonsonlabs.com/" />
 ```
 
 ## 📁 Estrutura

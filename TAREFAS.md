@@ -2,7 +2,7 @@
 
 ## ✅ Concluído
 
-- [x] **WhatsApp**: Número atualizado para 5542988283963
+- [x] **Contato**: somente formulário Netlify (e-mail). Sem WhatsApp no site.
 - [x] **Imagens otimizadas**: PNG (78MB) → WebP (3.8MB) — 95% de redução
 - [x] **SEO completo**: Meta tags, Open Graph, Twitter Cards, Schema.org
 - [x] **HTML lang**: Corrigido para pt-BR
@@ -12,9 +12,8 @@
 
 ## 🔴 Pendente
 
-- [ ] **Formspree**: Criar conta em [formspree.io](https://formspree.io) e substituir `YOUR_FORM_ID` em `src/components/ContactForm.tsx`
-- [ ] **Vídeos do YouTube**: Substituir `dQw4w9WgXcQ` pelos IDs reais em `src/pages/Home.tsx`
-- [ ] **Clipes Musicais**: Substituir dados placeholder por artistas reais em `src/pages/Home.tsx`
+- [ ] **Netlify Forms**: conferir no painel se o formulário `contact` notifica o e-mail certo
+- [ ] **Domínio**: confirmar `jacobjonsonlabs.com` como domínio primário e o redirect de `jacobjonsonlabs.netlify.app`
 
 ## 🟢 Opcional
 

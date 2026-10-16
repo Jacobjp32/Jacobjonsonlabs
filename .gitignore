@@ -1,5 +1,7 @@
 # Local Netlify folder
 .netlify
+.claude/
+.playwright-mcp/
 node_modules/
 dist/
 dist-site-jacob.zip
