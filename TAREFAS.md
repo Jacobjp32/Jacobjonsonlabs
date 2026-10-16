@@ -13,7 +13,7 @@
 ## 🔴 Pendente
 
 - [ ] **Netlify Forms**: conferir no painel se o formulário `contact` notifica o e-mail certo
-- [ ] **Domínio**: confirmar `jacobjonsonlabs.com` como domínio primário e o redirect de `jacobjonsonlabs.netlify.app`
+- [ ] **Domínio**: confirmar `jacobjonsonlabs.com` como domínio primário no painel. O 301 forçado de `jacobjonsonlabs.netlify.app/*` para `https://jacobjonsonlabs.com/:splat` está no repositório.
 
 ## 🟢 Opcional
 
