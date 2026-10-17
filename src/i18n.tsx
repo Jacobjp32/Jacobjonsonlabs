@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import pt from "./i18n/pt.json";
 import en from "./i18n/en.json";
-import type { Lang } from "./lib/routes";
+import { langFromPath, type Lang } from "./lib/routes";
 
 const dictionaries = { pt, en } as const;
 export type MessageKey = keyof typeof pt;
@@ -18,14 +18,7 @@ const detectLang = (): Lang => {
   if (typeof window === "undefined") return "pt";
   const initial = (window as Window & { __INITIAL_LANG__?: string }).__INITIAL_LANG__;
   if (initial === "pt" || initial === "en") return initial;
-  try {
-    const saved = localStorage.getItem("lang");
-    if (saved === "pt" || saved === "en") return saved;
-  } catch {
-    /* ignore storage failures */
-  }
-  const locales = navigator.languages?.length ? navigator.languages : [navigator.language];
-  return locales.some((locale) => locale.toLowerCase().startsWith("pt")) ? "pt" : "en";
+  return langFromPath(window.location.pathname);
 };
 
 export function I18nProvider({ children }: { children: ReactNode }) {

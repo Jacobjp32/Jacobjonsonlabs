@@ -83,28 +83,8 @@
       (function () {
         try {
           var path = window.location.pathname.replace(/\/+$/, "") || "/";
-          var pathLang = path === "/en" || path.indexOf("/en/") === 0 ? "en" : "pt";
-          var savedLang = localStorage.getItem("lang");
-          var browserLocales =
-            (navigator.languages && navigator.languages.length
-              ? navigator.languages
-              : [navigator.language]) || [];
-          var lang =
-            path === "/" && (savedLang === "pt" || savedLang === "en")
-              ? savedLang
-              : path === "/"
-                ? browserLocales.some(function (locale) {
-                    return String(locale).toLowerCase().indexOf("pt") === 0;
-                  })
-                  ? "pt"
-                  : "en"
-                : pathLang;
+          var lang = path === "/en" || path.indexOf("/en/") === 0 ? "en" : "pt";
           window.__INITIAL_LANG__ = lang;
-          if (path === "/" && lang === "en") {
-            window.location.replace("/en/");
-            return;
-          }
-          if (savedLang !== lang) localStorage.setItem("lang", lang);
           document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
         } catch (error) {
           console.error("Language bootstrap failed", error);
