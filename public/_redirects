@@ -25,39 +25,40 @@ https://jacobjonsonlabs.netlify.app/* https://jacobjonsonlabs.com/:splat 301!
 
 # Known pages, with and without the trailing slash, stay 200.
 # Listed before the English 404 splat so those URLs are not swallowed.
-/en /en/index.html 200
+# The trailing ! stops Netlify pretty URLs from 301-ing the slashless path.
+/en /en/index.html 200!
 /en/ /en/index.html 200
-/work /work/index.html 200
+/work /work/index.html 200!
 /work/ /work/index.html 200
-/en/work /en/work/index.html 200
+/en/work /en/work/index.html 200!
 /en/work/ /en/work/index.html 200
-/services /services/index.html 200
+/services /services/index.html 200!
 /services/ /services/index.html 200
-/en/services /en/services/index.html 200
+/en/services /en/services/index.html 200!
 /en/services/ /en/services/index.html 200
-/services/web-development /services/web-development/index.html 200
+/services/web-development /services/web-development/index.html 200!
 /services/web-development/ /services/web-development/index.html 200
-/en/services/web-development /en/services/web-development/index.html 200
+/en/services/web-development /en/services/web-development/index.html 200!
 /en/services/web-development/ /en/services/web-development/index.html 200
-/services/automation /services/automation/index.html 200
+/services/automation /services/automation/index.html 200!
 /services/automation/ /services/automation/index.html 200
-/en/services/automation /en/services/automation/index.html 200
+/en/services/automation /en/services/automation/index.html 200!
 /en/services/automation/ /en/services/automation/index.html 200
-/services/video-editing /services/video-editing/index.html 200
+/services/video-editing /services/video-editing/index.html 200!
 /services/video-editing/ /services/video-editing/index.html 200
-/en/services/video-editing /en/services/video-editing/index.html 200
+/en/services/video-editing /en/services/video-editing/index.html 200!
 /en/services/video-editing/ /en/services/video-editing/index.html 200
-/lab /lab/index.html 200
+/lab /lab/index.html 200!
 /lab/ /lab/index.html 200
-/en/lab /en/lab/index.html 200
+/en/lab /en/lab/index.html 200!
 /en/lab/ /en/lab/index.html 200
-/about /about/index.html 200
+/about /about/index.html 200!
 /about/ /about/index.html 200
-/en/about /en/about/index.html 200
+/en/about /en/about/index.html 200!
 /en/about/ /en/about/index.html 200
-/contact /contact/index.html 200
+/contact /contact/index.html 200!
 /contact/ /contact/index.html 200
-/en/contact /en/contact/index.html 200
+/en/contact /en/contact/index.html 200!
 /en/contact/ /en/contact/index.html 200
 
 # Unknown English paths. Existing files above win because this rule is not forced.
