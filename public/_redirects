@@ -1,4 +1,65 @@
 # Host-scoped so jacobjonsonlabs.com does not match and cannot loop.
-# Must stay above the SPA fallback: _redirects is applied before netlify.toml.
+# Netlify reads this file before netlify.toml. There is no /* 200 rewrite:
+# prerendered pages are real files, and anything else must 404.
 https://jacobjonsonlabs.netlify.app/* https://jacobjonsonlabs.com/:splat 301!
-/* /index.html 200
+
+# Legacy aliases
+/servicos /services/ 301
+/servicos/ /services/ 301
+/automacao-ia /services/#automation 301
+/automacao-ia/ /services/#automation 301
+/ai-automation /en/services/#automation 301
+/ai-automation/ /en/services/#automation 301
+/en/ai-automation /en/services/#automation 301
+/en/ai-automation/ /en/services/#automation 301
+/ativos-digitais /lab/ 301
+/ativos-digitais/ /lab/ 301
+/digital-assets /en/lab/ 301
+/digital-assets/ /en/lab/ 301
+/en/digital-assets /en/lab/ 301
+/en/digital-assets/ /en/lab/ 301
+/produtos /lab/ 301
+/produtos/ /lab/ 301
+/loja /lab/ 301
+/loja/ /lab/ 301
+
+# Known pages, with and without the trailing slash, stay 200.
+# Listed before the English 404 splat so those URLs are not swallowed.
+# The trailing ! stops Netlify pretty URLs from 301-ing the slashless path.
+/en /en/index.html 200!
+/en/ /en/index.html 200
+/work /work/index.html 200!
+/work/ /work/index.html 200
+/en/work /en/work/index.html 200!
+/en/work/ /en/work/index.html 200
+/services /services/index.html 200!
+/services/ /services/index.html 200
+/en/services /en/services/index.html 200!
+/en/services/ /en/services/index.html 200
+/services/web-development /services/web-development/index.html 200!
+/services/web-development/ /services/web-development/index.html 200
+/en/services/web-development /en/services/web-development/index.html 200!
+/en/services/web-development/ /en/services/web-development/index.html 200
+/services/automation /services/automation/index.html 200!
+/services/automation/ /services/automation/index.html 200
+/en/services/automation /en/services/automation/index.html 200!
+/en/services/automation/ /en/services/automation/index.html 200
+/services/video-editing /services/video-editing/index.html 200!
+/services/video-editing/ /services/video-editing/index.html 200
+/en/services/video-editing /en/services/video-editing/index.html 200!
+/en/services/video-editing/ /en/services/video-editing/index.html 200
+/lab /lab/index.html 200!
+/lab/ /lab/index.html 200
+/en/lab /en/lab/index.html 200!
+/en/lab/ /en/lab/index.html 200
+/about /about/index.html 200!
+/about/ /about/index.html 200
+/en/about /en/about/index.html 200!
+/en/about/ /en/about/index.html 200
+/contact /contact/index.html 200!
+/contact/ /contact/index.html 200
+/en/contact /en/contact/index.html 200!
+/en/contact/ /en/contact/index.html 200
+
+# Unknown English paths. Existing files above win because this rule is not forced.
+/en/* /404-en.html 404

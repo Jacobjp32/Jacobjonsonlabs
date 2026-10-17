@@ -78,3 +78,17 @@ export const applyPageSeo = ({
   setLink("alternate", abs(alternate.en), "en");
   setLink("alternate", `${BASE_URL}/`, "x-default");
 };
+
+export const applyNotFoundSeo = (lang: Lang) => {
+  const title = lang === "pt" ? "Página não encontrada | Jacob Jonson Labs" : "Page not found | Jacob Jonson Labs";
+  const description = lang === "pt" ? "Esse endereço não faz parte do site." : "This address is not part of the site.";
+  document.title = title;
+  document.documentElement.lang = htmlLang[lang];
+  setMeta('meta[name="robots"]', "noindex");
+  setMeta('meta[name="description"]', description);
+  setMeta('meta[property="og:title"]', title);
+  setMeta('meta[property="og:description"]', description);
+  const path = window.location.pathname || "/";
+  setLink("canonical", abs(path));
+  document.querySelectorAll('link[rel="alternate"]').forEach((link) => link.remove());
+};

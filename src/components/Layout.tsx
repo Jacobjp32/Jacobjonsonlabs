@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useI18n } from "@/i18n";
-import { applyPageSeo } from "@/lib/seo";
+import { applyNotFoundSeo, applyPageSeo } from "@/lib/seo";
 import { langFromPath, localizePath, navItems, pageFromPath, pages, type Lang, type PageId } from "@/lib/routes";
 
 function LanguageSwitch() {
@@ -26,6 +26,11 @@ function LanguageSwitch() {
           pageFromPath(location.pathname) === "contact"
             ? `?service=${service}`
             : "";
+        try {
+          localStorage.setItem("lang-banner", next === "en" ? "accepted" : "dismissed");
+        } catch {
+          /* ignore storage failures */
+        }
         navigate(`${localizePath(location.pathname, next)}${keepService}${location.hash}`);
       }}
     >
@@ -145,6 +150,82 @@ function Header() {
   );
 }
 
+const BANNER_KEY = "lang-banner";
+
+function browserPrefersEnglish() {
+  const locales = navigator.languages?.length ? navigator.languages : [navigator.language];
+  return String(locales[0] || "").toLowerCase().startsWith("en");
+}
+
+function LanguageBanner() {
+  const { lang, setLang } = useI18n();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (langFromPath(location.pathname) !== "pt") {
+      setVisible(false);
+      return;
+    }
+    try {
+      const choice = localStorage.getItem(BANNER_KEY);
+      if (choice === "dismissed" || choice === "accepted") {
+        setVisible(false);
+        return;
+      }
+    } catch {
+      setVisible(false);
+      return;
+    }
+    setVisible(browserPrefersEnglish());
+  }, [location.pathname]);
+
+  if (!visible || lang !== "pt") return null;
+
+  const accept = () => {
+    try {
+      localStorage.setItem(BANNER_KEY, "accepted");
+    } catch {
+      /* ignore storage failures */
+    }
+    setLang("en");
+    const service = new URLSearchParams(location.search).get("service");
+    const keepService =
+      service &&
+      ["web-development", "automation", "video-editing"].includes(service) &&
+      pageFromPath(location.pathname) === "contact"
+        ? `?service=${service}`
+        : "";
+    navigate(`${localizePath(location.pathname, "en")}${keepService}${location.hash}`);
+  };
+
+  const dismiss = () => {
+    try {
+      localStorage.setItem(BANNER_KEY, "dismissed");
+    } catch {
+      /* ignore storage failures */
+    }
+    setVisible(false);
+  };
+
+  return (
+    <aside
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-background"
+      aria-label="Language"
+    >
+      <div className="container flex items-center justify-between gap-3 py-3">
+        <button type="button" className="min-h-11 px-1 text-sm font-semibold text-primary" onClick={accept}>
+          View in English
+        </button>
+        <button type="button" className="min-h-11 px-3 text-sm text-foreground/65" onClick={dismiss}>
+          Not now
+        </button>
+      </div>
+    </aside>
+  );
+}
+
 function Footer() {
   const { lang, t } = useI18n();
   return (
@@ -171,7 +252,15 @@ function Footer() {
   );
 }
 
-export default function Layout({ page, children }: { page: PageId; children: React.ReactNode }) {
+export default function Layout({
+  page,
+  children,
+  unlisted = false,
+}: {
+  page: PageId;
+  children: React.ReactNode;
+  unlisted?: boolean;
+}) {
   const { lang, setLang, t } = useI18n();
   const location = useLocation();
 
@@ -181,6 +270,10 @@ export default function Layout({ page, children }: { page: PageId; children: Rea
   }, [lang, location.pathname, setLang]);
 
   useEffect(() => {
+    if (unlisted) {
+      applyNotFoundSeo(lang);
+      return;
+    }
     applyPageSeo({
       lang,
       title: t(`commercial.seo.${page}.title`),
@@ -188,7 +281,7 @@ export default function Layout({ page, children }: { page: PageId; children: Rea
       path: pages[page][lang],
       alternate: pages[page],
     });
-  }, [lang, page, t]);
+  }, [lang, page, t, unlisted]);
 
   return (
     <>
@@ -200,6 +293,7 @@ export default function Layout({ page, children }: { page: PageId; children: Rea
         {children}
       </main>
       <Footer />
+      <LanguageBanner />
     </>
   );
 }
