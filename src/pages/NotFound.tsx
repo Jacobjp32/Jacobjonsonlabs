@@ -7,7 +7,7 @@ export default function NotFound() {
   const { lang } = useI18n();
   const english = lang === "en";
   return (
-    <Layout page="home">
+    <Layout page="home" unlisted>
       <section className="border-b border-white/10 pt-[76px]">
         <div className="container py-24">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">404</p>

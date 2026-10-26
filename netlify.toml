@@ -6,16 +6,14 @@
   NODE_VERSION = "18"
 
 # Only the Netlify subdomain matches this host, so jacobjonsonlabs.com cannot loop.
+# Do not add a /* -> /index.html 200 rewrite here. Unknown URLs must fall through
+# to 404.html. Route aliases and the English 404 live in public/_redirects, which
+# Netlify reads before this file.
 [[redirects]]
   from = "https://jacobjonsonlabs.netlify.app/*"
   to = "https://jacobjonsonlabs.com/:splat"
   status = 301
   force = true
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
 
 [[headers]]
   for = "/assets/*"
