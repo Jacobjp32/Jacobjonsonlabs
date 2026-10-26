@@ -31,7 +31,14 @@ npm run build
 
 # Preview do build
 npm run preview
+
+# Rotas indexáveis (sai 1 enquanto o fallback /* → index.html 200 existir)
+npm run verify:indexable-routes
 ```
+
+## Verificação das rotas indexáveis
+
+`npm run verify:indexable-routes` confere se uma resposta HTML 200 no host estático é só uma página de `src/lib/routes.ts`, com canonical e hreflang no par PT/EN. O comando sai com código 1 enquanto `public/_redirects` e `netlify.toml` reescrevem `/*` para `/index.html` com status 200: URL desconhecida ou antiga responde a home. O procedimento para o próximo agente está em `.cursor/skills/verify-indexable-routes/SKILL.md`.
 
 ## ✏️ Configurações Importantes
 

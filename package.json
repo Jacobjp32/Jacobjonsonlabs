@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:indexable-routes": "node scripts/verify-indexable-routes.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
